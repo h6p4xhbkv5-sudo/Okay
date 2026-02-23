@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><title>API Test</title>
+<style>body{font-family:sans-serif;padding:2rem;background:#111;color:#fff;}
+button{background:#C9A84C;color:#000;border:none;padding:.8rem 2rem;border-radius:5px;cursor:pointer;font-size:1rem;}
+pre{background:#222;padding:1rem;border-radius:5px;margin-top:1rem;white-space:pre-wrap;word-break:break-all;font-size:.85rem;}
+.ok{color:#4ADE80;}.err{color:#FB7185;}</style></head>
+<body>
+<h2>🔧 Lumina AI — API Connection Test</h2>
+<p>Click the button below to test if your Claude API is connected correctly.</p>
+<button onclick="test()">Test API Connection</button>
+<pre id="out">Results will appear here...</pre>
+<script>
+async function test(){
+  const out = document.getElementById('out');
+  out.textContent = '⏳ Testing...';
+  try {
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 100,
+        messages: [{role:'user', content:'Say exactly: API connection successful!'}]
+      })
+    });
+    const data = await r.json();
+    if(data.content && data.content[0]){
+      out.innerHTML = '<span class="ok">✅ SUCCESS! API is working!\n\nClaude said: ' + data.content[0].text + '</span>';
+    } else if(data.error){
+      out.innerHTML = '<span class="err">❌ ERROR: ' + JSON.stringify(data.error) + '</span>';
+    } else {
+      out.innerHTML = '<span class="err">❌ Unexpected response:\n' + JSON.stringify(data, null, 2) + '</span>';
+    }
+  } catch(e) {
+    out.innerHTML = '<span class="err">❌ FAILED: ' + e.message + '\n\nThis means api/chat.js is not found.\nCheck your GitHub repo has the api/ folder.</span>';
+  }
+}
+</script>
+</body>
+</html>

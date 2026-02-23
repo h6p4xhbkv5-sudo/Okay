@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina AI — Intelligent Learning for Every Student</title>
+<link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-b:#E8C96A;--gold-dim:rgba(201,168,76,.13);--gold-bdr:rgba(201,168,76,.28);
+  --bg:#06080D;--bg2:#0D1018;--bg3:#141924;--bg4:#1C2333;
+  --white:#F5F2EC;--wd:rgba(245,242,236,.55);--wf:rgba(245,242,236,.07);
+  --green:#4ADE80;--red:#FB7185;--blue:#60A5FA;
+  --ff:'DM Sans',sans-serif;--fd:'Cormorant Garamond',serif;
+}
+body.adhd *{font-family:'OpenDyslexic',sans-serif!important;line-height:1.95!important;letter-spacing:.04em!important;}
+body.adhd p,body.adhd li,body.adhd .msg{font-size:1.02rem!important;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ff);background:var(--bg);color:var(--white);overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gold-bdr);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;gap:1rem;padding:.85rem 2rem;background:rgba(6,8,13,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--gold-bdr);}
+.logo{font-family:var(--fd);font-size:1.55rem;font-weight:700;color:var(--gold);cursor:pointer;white-space:nowrap;}
+.logo span{color:var(--white);}
+.nav-links{display:flex;gap:1rem;list-style:none;flex:1;justify-content:center;}
+.nav-links a{color:var(--wd);font-size:.79rem;font-weight:500;cursor:pointer;transition:color .2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.on{color:var(--gold);}
+.nav-right{display:flex;gap:.5rem;align-items:center;flex-shrink:0;}
+.adhd-pill{display:flex;align-items:center;gap:.45rem;padding:.38rem .85rem;border:1px solid var(--gold-bdr);border-radius:20px;cursor:pointer;font-size:.73rem;color:var(--wd);background:transparent;font-family:var(--ff);transition:all .2s;white-space:nowrap;}
+.adhd-pill:hover,.adhd-pill.on{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+.adhd-dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+.nb{position:relative;width:34px;height:34px;border-radius:50%;background:var(--bg3);border:1px solid var(--gold-bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.9rem;transition:border-color .2s;}
+.nb:hover{border-color:var(--gold);}
+.nbadge{position:absolute;top:-3px;right:-3px;width:15px;height:15px;border-radius:50%;background:var(--red);font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.62rem 1.3rem;border-radius:5px;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:var(--ff);white-space:nowrap;}
+.btn-g{background:var(--gold);color:var(--bg);}
+.btn-g:hover{background:var(--gold-b);transform:translateY(-1px);}
+.btn-g:active{transform:none;}
+.btn-o{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.btn-o:hover{background:var(--gold-dim);}
+.btn-r{background:transparent;color:var(--red);border:1px solid var(--red);}
+.btn-r:hover{background:rgba(251,113,133,.1);}
+.btn-lg{padding:.88rem 2rem;font-size:.94rem;}
+.btn-w{width:100%;justify-content:center;padding:.88rem;}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;}
+
+/* PAGES */
+.page{display:none;min-height:100vh;}
+.page.on{display:block;}
+.ph{text-align:center;max-width:680px;margin:0 auto;padding:6.8rem 2rem 2.5rem;}
+.ph .ey{font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+.ph h1{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3.1rem);font-weight:700;line-height:1.1;margin:.45rem 0;}
+.ph h1 .g{color:var(--gold);}
+.ph p{color:var(--wd);font-size:.95rem;line-height:1.85;margin-top:.75rem;}
+
+/* FORM */
+.fg{display:flex;flex-direction:column;gap:.38rem;margin-bottom:1.1rem;}
+.fg label{font-size:.71rem;text-transform:uppercase;letter-spacing:.07em;color:var(--wd);}
+.fg input,.fg select,.fg textarea{padding:.74rem 1rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;color:var(--white);font-family:var(--ff);font-size:.9rem;outline:none;transition:border-color .2s;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(245,242,236,.28);}
+.fg select option{background:var(--bg3);}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+
+/* PANELS */
+.pn{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.75rem;}
+.pn h3{font-family:var(--fd);font-size:1.12rem;font-weight:700;margin-bottom:1.15rem;}
+.pnr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.15rem;}
+.pnr h3{margin-bottom:0;}
+
+/* ═══ HOME ═══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden;}
+.hg{position:absolute;inset:0;background-image:linear-gradient(var(--gold-bdr) 1px,transparent 1px),linear-gradient(90deg,var(--gold-bdr) 1px,transparent 1px);background-size:75px 75px;opacity:.22;animation:gm 30s linear infinite;pointer-events:none;}
+@keyframes gm{to{transform:translateY(75px)}}
+.orb{position:absolute;border-radius:50%;filter:blur(130px);pointer-events:none;animation:of 12s ease-in-out infinite;}
+.o1{width:420px;height:420px;background:var(--gold);opacity:.055;top:-15%;left:-8%;}
+.o2{width:300px;height:300px;background:#5B8FD4;opacity:.065;bottom:-8%;right:-5%;animation-direction:reverse;animation-duration:10s;}
+@keyframes of{0%,100%{transform:translate(0,0)}50%{transform:translate(18px,-18px)}}
+.hp{display:inline-flex;align-items:center;gap:.5rem;padding:.34rem 1rem;border:1px solid var(--gold-bdr);border-radius:20px;font-size:.71rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;background:var(--gold-dim);animation:fu .7s ease both;}
+.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,6vw,5.6rem);font-weight:700;line-height:1.04;max-width:920px;animation:fu .8s .1s ease both;}
+.hero h1 .g{color:var(--gold);}
+.hero p{margin-top:1.2rem;font-size:1rem;color:var(--wd);max-width:540px;line-height:1.85;animation:fu .8s .2s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hsrow{display:flex;gap:.7rem;margin-top:2.3rem;animation:fu .8s .3s ease both;flex-wrap:wrap;justify-content:center;}
+.hei{padding:.84rem 1.3rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;color:var(--white);font-family:var(--ff);font-size:.92rem;outline:none;width:275px;transition:border-color .2s;}
+.hei:focus{border-color:var(--gold);}
+.hei::placeholder{color:rgba(245,242,236,.33);}
+.htrust{display:flex;gap:1.8rem;margin-top:1.8rem;animation:fu .8s .4s ease both;flex-wrap:wrap;justify-content:center;}
+.ht{font-size:.77rem;color:var(--wd);display:flex;align-items:center;gap:.35rem;}
+.ht::before{content:'✦';color:var(--gold);font-size:.56rem;}
+.sbar{display:flex;justify-content:center;background:var(--bg2);border-top:1px solid var(--gold-bdr);border-bottom:1px solid var(--gold-bdr);}
+.si{flex:1;max-width:220px;text-align:center;padding:2rem 1rem;border-right:1px solid var(--gold-bdr);}
+.si:last-child{border-right:none;}
+.sn{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--gold);}
+.sl{font-size:.69rem;color:var(--wd);text-transform:uppercase;letter-spacing:.07em;margin-top:.3rem;}
+.hs{padding:6rem 4rem;max-width:1200px;margin:0 auto;}
+.sh{margin-bottom:2.8rem;}
+.sh .ey{font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.sh h2{font-family:var(--fd);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:700;line-height:1.13;margin-top:.4rem;}
+.sh h2 .g{color:var(--gold);}
+.fg3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.fc{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.85rem;transition:all .3s;cursor:pointer;}
+.fc:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 16px 40px rgba(201,168,76,.1);}
+.fi{font-size:1.75rem;margin-bottom:.9rem;}
+.fc h3{font-family:var(--fd);font-size:1.12rem;font-weight:700;margin-bottom:.45rem;}
+.fc p{font-size:.83rem;color:var(--wd);line-height:1.75;}
+.fl{font-size:.7rem;color:var(--gold);margin-top:.8rem;display:block;letter-spacing:.05em;}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:.8rem;}
+.sc{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:6px;padding:.82rem;text-align:center;transition:all .2s;}
+.sc:hover{border-color:var(--gold);background:var(--gold-dim);}
+.si2{font-size:1.2rem;margin-bottom:.38rem;}
+.sn2{font-size:.77rem;font-weight:600;}
+.sl2{font-size:.63rem;color:var(--gold);margin-top:.13rem;}
+.hcta{margin:0 4rem 6rem;background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--gold-bdr);border-radius:9px;padding:4rem;text-align:center;position:relative;overflow:hidden;}
+.hcta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 70% at 50% 100%,rgba(201,168,76,.05),transparent);}
+.hcta h2{font-family:var(--fd);font-size:clamp(1.7rem,3vw,2.6rem);font-weight:700;position:relative;}
+.hcta p{color:var(--wd);margin:.7rem 0 2rem;position:relative;}
+
+/* ═══ SIGNUP ═══ */
+#signup-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 2rem;background:var(--bg);}
+#signup-page.on{display:flex;}
+#signup-page::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 40%,rgba(201,168,76,.05),transparent);pointer-events:none;}
+.scard{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;width:100%;max-width:540px;overflow:hidden;position:relative;}
+.sstep{display:none;padding:2.8rem;}
+.sstep.on{display:block;}
+.sdots{display:flex;gap:.45rem;justify-content:center;margin-bottom:1.8rem;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--gold-bdr);transition:background .3s;}
+.sdot.on{background:var(--gold);}
+.scard h2{font-family:var(--fd);font-size:1.85rem;font-weight:700;margin-bottom:.28rem;}
+.ssub{color:var(--wd);font-size:.87rem;margin-bottom:1.5rem;}
+.pcards{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.4rem;}
+.pc{padding:.95rem;border:1px solid var(--gold-bdr);border-radius:6px;cursor:pointer;transition:all .2s;text-align:center;}
+.pc:hover,.pc.on{border-color:var(--gold);background:var(--gold-dim);}
+.pn2{font-size:.85rem;font-weight:600;}
+.pp{font-size:1.2rem;font-weight:700;color:var(--gold);font-family:var(--fd);margin:.12rem 0;}
+.pcyc{font-size:.67rem;color:var(--wd);}
+.rcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.65rem;margin-bottom:1.4rem;}
+.rc{padding:.9rem .5rem;border:1px solid var(--gold-bdr);border-radius:6px;cursor:pointer;transition:all .2s;text-align:center;}
+.rc:hover,.rc.on{border-color:var(--gold);background:var(--gold-dim);}
+.ri{font-size:1.4rem;margin-bottom:.38rem;}
+.rn{font-size:.79rem;font-weight:600;}
+.ldsec{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:6px;padding:1.25rem;margin-bottom:1.2rem;}
+.ldsec h4{font-size:.87rem;font-weight:600;margin-bottom:.4rem;color:var(--gold);}
+.ldsec>p{font-size:.78rem;color:var(--wd);line-height:1.7;margin-bottom:.9rem;}
+.ldopts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;}
+.ldo{display:flex;align-items:center;gap:.65rem;padding:.65rem .85rem;border:1px solid var(--gold-bdr);border-radius:5px;cursor:pointer;transition:all .2s;}
+.ldo:hover,.ldo.on{border-color:var(--gold);background:var(--gold-dim);}
+.ldo input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0;pointer-events:none;}
+.ldt strong{display:block;font-size:.81rem;font-weight:600;}
+.ldt span{font-size:.7rem;color:var(--wd);}
+.gdpr{display:flex;align-items:flex-start;gap:.65rem;margin:1rem 0;padding:.9rem 1rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;}
+.gdpr input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;margin-top:.15rem;}
+.gdpr p{font-size:.77rem;color:var(--wd);line-height:1.6;}
+.gdpr a{color:var(--gold);cursor:pointer;text-decoration:underline;}
+.adiv{display:flex;align-items:center;gap:.8rem;margin:1.1rem 0;}
+.adiv span{font-size:.71rem;color:var(--wd);white-space:nowrap;}
+.adiv::before,.adiv::after{content:'';flex:1;height:1px;background:var(--gold-bdr);}
+.aswitch{text-align:center;font-size:.82rem;color:var(--wd);}
+.aswitch a{color:var(--gold);cursor:pointer;}
+
+/* ═══ DASHBOARD ═══ */
+#dashboard-page{padding-bottom:0;}
+#dashboard-page.on{display:block;}
+.dlayout{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 66px);margin-top:66px;}
+.dsidebar{background:var(--bg2);border-right:1px solid var(--gold-bdr);padding:1.4rem 1rem;position:sticky;top:66px;height:calc(100vh - 66px);overflow-y:auto;}
+.duser{text-align:center;padding-bottom:1.3rem;border-bottom:1px solid var(--gold-bdr);margin-bottom:1.1rem;}
+.dava{width:52px;height:52px;border-radius:50%;background:var(--gold-dim);border:2px solid var(--gold-bdr);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto .6rem;}
+.dname{font-weight:600;font-size:.9rem;}
+.dplan{font-size:.68rem;color:var(--gold);margin-top:.18rem;}
+.dnav{list-style:none;}
+.dnav li a{display:flex;align-items:center;gap:.65rem;padding:.6rem .8rem;border-radius:5px;color:var(--wd);font-size:.82rem;cursor:pointer;transition:all .2s;margin-bottom:.18rem;border:1px solid transparent;}
+.dnav li a:hover,.dnav li a.on{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-bdr);}
+.dmain{padding:1.8rem;}
+.dwelcome h2{font-family:var(--fd);font-size:1.85rem;font-weight:700;}
+.dwelcome p{color:var(--wd);font-size:.87rem;margin-top:.25rem;}
+.ano{background:rgba(201,168,76,.08);border:1px solid var(--gold-bdr);border-radius:5px;padding:.85rem 1.1rem;margin:1.2rem 0;display:none;align-items:center;gap:.75rem;font-size:.83rem;}
+.ano.show{display:flex;}
+.scards{display:grid;grid-template-columns:repeat(4,1fr);gap:.95rem;margin:1.3rem 0 1.7rem;}
+.scc{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:8px;padding:1.35rem;}
+.sclbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wd);}
+.scval{font-family:var(--fd);font-size:2.1rem;font-weight:700;color:var(--gold);margin:.28rem 0;}
+.scsub{font-size:.74rem;color:var(--wd);}
+.scup{font-size:.73rem;color:var(--green);margin-top:.18rem;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+
+/* ═══ CHAT ═══ */
+.cbox{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;display:flex;flex-direction:column;}
+.chd{padding:1.1rem 1.4rem;border-bottom:1px solid var(--gold-bdr);display:flex;align-items:center;gap:.8rem;}
+.cava{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-bdr);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.cinf h4{font-size:.89rem;font-weight:600;}
+.cinf p{font-size:.72rem;color:var(--gold);}
+.conl{width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:auto;}
+.cmsgs{flex:1;overflow-y:auto;padding:1.15rem;display:flex;flex-direction:column;gap:.8rem;min-height:0;}
+.cmsgs::-webkit-scrollbar{width:3px;}
+.cmsgs::-webkit-scrollbar-thumb{background:var(--gold-bdr);}
+.msg{max-width:90%;padding:.78rem 1rem;border-radius:8px;font-size:.86rem;line-height:1.7;white-space:pre-wrap;}
+.msg.ai{background:var(--bg3);border:1px solid var(--gold-bdr);align-self:flex-start;}
+.msg.usr{background:var(--gold-dim);border:1px solid var(--gold-bdr);align-self:flex-end;color:var(--gold);}
+.cfoot{padding:.95rem 1.15rem;border-top:1px solid var(--gold-bdr);display:flex;gap:.55rem;}
+.cfoot input{flex:1;padding:.68rem .9rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;color:var(--white);font-family:var(--ff);font-size:.85rem;outline:none;}
+.cfoot input:focus{border-color:var(--gold);}
+.cfoot button{background:var(--gold);color:var(--bg);border:none;border-radius:5px;padding:.68rem 1.1rem;cursor:pointer;font-weight:600;font-size:.82rem;font-family:var(--ff);transition:background .2s;}
+.cfoot button:hover{background:var(--gold-b);}
+.cfoot button:disabled{opacity:.45;cursor:not-allowed;}
+.anote{font-size:.69rem;color:var(--wd);text-align:center;padding:.42rem;border-top:1px solid var(--wf);}
+
+/* ═══ PROGRESS ═══ */
+.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:1080px;margin:0 auto 1.7rem;padding:0 2rem;}
+.pmain{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;padding:0 2rem;}
+.spb{margin-bottom:.95rem;}
+.spr{display:flex;justify-content:space-between;font-size:.8rem;margin-bottom:.37rem;}
+.spr span:first-child{color:var(--wd);}
+.spr span:last-child{color:var(--gold);font-weight:600;}
+.spbar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.spfill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-b));border-radius:3px;}
+.ai{display:flex;align-items:center;gap:.82rem;padding:.62rem 0;border-bottom:1px solid var(--wf);font-size:.81rem;}
+.ai:last-child{border-bottom:none;}
+.aico{width:30px;height:30px;border-radius:5px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.78rem;}
+.atxt{flex:1;color:var(--wd);}
+.atxt strong{color:var(--white);display:block;margin-bottom:.09rem;}
+.atm{font-size:.68rem;color:var(--wd);white-space:nowrap;}
+.sgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:.36rem;}
+.sd{aspect-ratio:1;border-radius:3px;background:var(--bg3);}
+.sd.done{background:var(--gold);opacity:.65;}
+.sd.td{background:var(--gold);opacity:1;box-shadow:0 0 8px rgba(201,168,76,.4);}
+
+/* ═══ STRENGTHS ═══ */
+.swrap{max-width:1080px;margin:0 auto;padding:0 2rem;}
+.swg{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;}
+.swp{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.65rem;}
+.swp.str{border-color:rgba(74,222,128,.3);}
+.swp.wk{border-color:rgba(251,113,133,.3);}
+.swi{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--wf);font-size:.83rem;}
+.swi:last-child{border-bottom:none;}
+.swd{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dg{background:var(--green);}.dr{background:var(--red);}
+.swt{flex:1;color:var(--wd);}
+.sws{font-weight:600;font-size:.79rem;}
+.sg2{color:var(--green);}.sr{color:var(--red);}
+.recsp{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.65rem;}
+.reci{display:flex;gap:.8rem;padding:.85rem;background:var(--bg3);border-radius:5px;margin-bottom:.72rem;border:1px solid var(--wf);}
+.prd{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.ph2{background:rgba(251,113,133,.2);color:var(--red);}
+.pm2{background:rgba(251,191,36,.2);color:#FBBF24;}
+.pl2{background:rgba(74,222,128,.2);color:var(--green);}
+.reb h4{font-size:.86rem;font-weight:600;margin-bottom:.18rem;}
+.reb p{font-size:.78rem;color:var(--wd);line-height:1.62;}
+
+/* ═══ TUTOR PAGE ═══ */
+#tutor-page{background:var(--bg);}
+.twrap{display:grid;grid-template-columns:250px 1fr;gap:1.4rem;max-width:1080px;margin:0 auto;padding:0 2rem;}
+.tsb{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.4rem;height:fit-content;position:sticky;top:86px;}
+.tst{font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.85rem;}
+.slist{list-style:none;}
+.slist li{padding:.58rem .78rem;border-radius:5px;font-size:.83rem;cursor:pointer;color:var(--wd);transition:all .2s;margin-bottom:.2rem;border:1px solid transparent;}
+.slist li:hover,.slist li.on{background:var(--gold-dim);color:var(--gold);border-color:var(--gold-bdr);}
+.lvlb{font-size:.59rem;padding:.1rem .4rem;border-radius:3px;background:var(--gold-dim);color:var(--gold);margin-left:.3rem;vertical-align:middle;}
+.qacts{margin-top:1.15rem;padding-top:1.15rem;border-top:1px solid var(--gold-bdr);}
+.qab{display:block;width:100%;text-align:left;padding:.52rem .75rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;color:var(--wd);font-size:.78rem;cursor:pointer;margin-bottom:.35rem;font-family:var(--ff);transition:all .2s;}
+.qab:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+.tbox{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;display:flex;flex-direction:column;height:600px;}
+
+/* ═══ QUESTIONS ═══ */
+.qwrap{max-width:880px;margin:0 auto;padding:0 2rem;}
+.tags{display:flex;flex-wrap:wrap;gap:.42rem;margin:.45rem 0 .85rem;}
+.tag{padding:.27rem .72rem;border:1px solid var(--gold-bdr);border-radius:20px;font-size:.71rem;color:var(--wd);cursor:pointer;transition:all .2s;}
+.tag.on,.tag:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+.qout{display:none;margin-top:1.4rem;}
+.qout.show{display:block;}
+.qi{padding:1.2rem 0;border-bottom:1px solid var(--wf);}
+.qi:last-child{border-bottom:none;}
+.qn{font-size:.69rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.42rem;}
+.qt{font-size:.91rem;line-height:1.8;white-space:pre-wrap;}
+.qm{font-size:.73rem;color:var(--wd);margin-top:.42rem;}
+.qm span{background:var(--gold-dim);border:1px solid var(--gold-bdr);padding:.15rem .5rem;border-radius:3px;color:var(--gold);}
+.qans{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;min-height:75px;margin-top:.72rem;padding:.72rem;font-size:.83rem;color:var(--wd);font-style:italic;}
+.adhd-hint{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.25);border-radius:5px;padding:.75rem 1rem;margin-bottom:1.1rem;font-size:.81rem;color:var(--blue);display:none;}
+.adhd-hint.show{display:block;}
+.gen-load{text-align:center;padding:2.5rem;color:var(--wd);}
+.spin{animation:sp 1s linear infinite;display:inline-block;font-size:1.8rem;}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ═══ ASSIGNMENTS ═══ */
+.awrap{max-width:1080px;margin:0 auto;padding:0 2rem;}
+.mtabs{display:flex;gap:.45rem;padding:.35rem;background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:5px;width:fit-content;margin-bottom:1.8rem;}
+.mtab{padding:.48rem 1.05rem;border-radius:4px;font-size:.81rem;font-weight:500;cursor:pointer;color:var(--wd);transition:all .2s;border:none;background:transparent;font-family:var(--ff);}
+.mtab.on{background:var(--gold);color:var(--bg);font-weight:600;}
+.alayout{display:grid;grid-template-columns:1fr 1.3fr;gap:1.4rem;}
+.aform{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.7rem;}
+.acard{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.35rem;margin-bottom:.9rem;transition:all .2s;}
+.acard:hover{border-color:var(--gold);}
+.ach{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.72rem;}
+.act h4{font-size:.91rem;font-weight:600;margin-bottom:.15rem;}
+.act p{font-size:.73rem;color:var(--wd);}
+.ast{font-size:.67rem;padding:.2rem .62rem;border-radius:20px;font-weight:600;white-space:nowrap;}
+.s-new{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid var(--gold-bdr);}
+.s-due{background:rgba(251,113,133,.15);color:var(--red);border:1px solid rgba(251,113,133,.3);}
+.s-done{background:rgba(74,222,128,.15);color:var(--green);border:1px solid rgba(74,222,128,.3);}
+.ameta{display:flex;gap:.95rem;font-size:.73rem;color:var(--wd);flex-wrap:wrap;}
+.afoot{display:flex;gap:.5rem;margin-top:.85rem;flex-wrap:wrap;}
+.stgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.85rem;}
+.sti{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;padding:.85rem;display:flex;align-items:center;gap:.7rem;}
+.stav{width:30px;height:30px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
+.stn{font-size:.82rem;font-weight:500;}
+.sts{font-size:.69rem;color:var(--wd);}
+
+/* ═══ SETTINGS ═══ */
+.setwrap{max-width:760px;margin:0 auto;padding:0 2rem;}
+.setsec{margin-bottom:1.8rem;}
+.setsec>h3{font-family:var(--fd);font-size:1.1rem;font-weight:700;margin-bottom:1.1rem;padding-bottom:.65rem;border-bottom:1px solid var(--gold-bdr);}
+.setrow{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0;border-bottom:1px solid var(--wf);}
+.setrow:last-child{border-bottom:none;}
+.setinfo h4{font-size:.88rem;font-weight:600;}
+.setinfo p{font-size:.77rem;color:var(--wd);margin-top:.18rem;}
+.tog{width:42px;height:22px;border-radius:11px;background:var(--bg3);border:1px solid var(--gold-bdr);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
+.tog.on{background:var(--gold);border-color:var(--gold);}
+.tog::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:var(--white);top:2px;left:2px;transition:transform .2s;}
+.tog.on::after{transform:translateX(20px);}
+.ldsum{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;padding:.95rem 1.1rem;margin-bottom:.9rem;}
+.ldtag{display:inline-flex;align-items:center;gap:.32rem;padding:.25rem .65rem;border-radius:20px;font-size:.71rem;background:var(--gold-dim);border:1px solid var(--gold-bdr);color:var(--gold);margin:.22rem;}
+
+/* ═══ PRICING ═══ */
+.pricewrap{max-width:800px;margin:0 auto;padding:0 2rem;}
+.pricecards{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem;margin-top:2.8rem;}
+.prcard{background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:2.4rem;position:relative;transition:all .3s;}
+.prcard.feat{border-color:var(--gold);box-shadow:0 0 50px rgba(201,168,76,.1);}
+.prcard:hover{transform:translateY(-4px);}
+.prbadge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--bg);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .82rem;border-radius:20px;}
+.prcard h3{font-family:var(--fd);font-size:1.35rem;font-weight:700;margin-bottom:.38rem;}
+.prprice{font-family:var(--fd);font-size:2.9rem;font-weight:700;color:var(--gold);line-height:1;}
+.prprice sup{font-size:1.1rem;vertical-align:super;}
+.prprice span{font-size:.85rem;color:var(--wd);font-family:var(--ff);font-weight:400;}
+.prdesc{font-size:.82rem;color:var(--wd);margin:.45rem 0 1.3rem;}
+.prfl{list-style:none;margin-bottom:1.6rem;}
+.prfl li{display:flex;align-items:flex-start;gap:.52rem;padding:.48rem 0;font-size:.85rem;color:var(--wd);border-bottom:1px solid var(--wf);}
+.prfl li:last-child{border-bottom:none;}
+.prfl li::before{content:'✦';color:var(--gold);font-size:.54rem;margin-top:.3rem;flex-shrink:0;}
+
+/* ═══ PRIVACY ═══ */
+.privwrap{max-width:760px;margin:0 auto;padding:0 2rem 4rem;}
+.privwrap h2{font-family:var(--fd);font-size:1.25rem;font-weight:700;margin:2rem 0 .75rem;color:var(--gold);}
+.privwrap p{font-size:.88rem;color:var(--wd);line-height:1.9;margin-bottom:.9rem;}
+.privwrap ul{margin:.45rem 0 .9rem 1.1rem;}
+.privwrap ul li{font-size:.86rem;color:var(--wd);line-height:1.8;margin-bottom:.25rem;}
+
+/* ═══ NOTIFICATIONS ═══ */
+.npanel{position:fixed;top:65px;right:1.3rem;width:310px;background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;z-index:998;display:none;box-shadow:0 20px 60px rgba(0,0,0,.65);}
+.npanel.show{display:block;}
+.nhead{padding:.9rem 1.2rem;border-bottom:1px solid var(--gold-bdr);display:flex;justify-content:space-between;align-items:center;}
+.nhead h4{font-family:var(--fd);font-size:.98rem;font-weight:700;}
+.nclear{font-size:.71rem;color:var(--gold);cursor:pointer;background:none;border:none;font-family:var(--ff);}
+.ni{padding:.85rem 1.2rem;border-bottom:1px solid var(--wf);display:flex;gap:.7rem;align-items:flex-start;}
+.ni:last-child{border-bottom:none;}
+.nico{font-size:.95rem;flex-shrink:0;margin-top:.1rem;}
+.nb2 p{font-size:.81rem;line-height:1.5;color:var(--wd);}
+.nb2 strong{color:var(--white);display:block;margin-bottom:.13rem;font-size:.83rem;}
+.ntime{font-size:.67rem;color:var(--wd);margin-top:.18rem;}
+.nunr{background:rgba(201,168,76,.05);}
+
+/* ═══ FEEDBACK ═══ */
+.fbfl{position:fixed;bottom:1.7rem;right:1.7rem;z-index:300;}
+.fbbtn{background:var(--gold);color:var(--bg);border:none;border-radius:50px;padding:.6rem 1.1rem;cursor:pointer;font-weight:600;font-size:.77rem;font-family:var(--ff);display:flex;align-items:center;gap:.38rem;box-shadow:0 4px 20px rgba(201,168,76,.3);transition:all .2s;}
+.fbbtn:hover{background:var(--gold-b);transform:translateY(-2px);}
+.fbmod{position:fixed;bottom:4rem;right:1.7rem;background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;padding:1.45rem;width:268px;z-index:300;display:none;box-shadow:0 20px 60px rgba(0,0,0,.55);}
+.fbmod.show{display:block;}
+.fbmod h4{font-family:var(--fd);font-size:.98rem;font-weight:700;margin-bottom:.75rem;}
+.stars{display:flex;gap:.28rem;margin-bottom:.75rem;}
+.star{font-size:1.3rem;cursor:pointer;opacity:.4;transition:opacity .2s;}
+.star.on{opacity:1;}
+.fbmod textarea{width:100%;padding:.65rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:5px;color:var(--white);font-family:var(--ff);font-size:.81rem;resize:none;height:72px;outline:none;margin-bottom:.75rem;}
+
+/* ═══ COOKIE ═══ */
+.ckb{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--gold-bdr);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:900;flex-wrap:wrap;}
+.ckb p{font-size:.81rem;color:var(--wd);flex:1;}
+.ckb a{color:var(--gold);cursor:pointer;}
+.ckbtns{display:flex;gap:.6rem;flex-shrink:0;}
+
+/* ═══ TOAST ═══ */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--gold);color:var(--white);padding:.65rem 1.4rem;border-radius:5px;font-size:.83rem;z-index:9999;transition:transform .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  nav{padding:.75rem 1rem;}
+  .nav-links{display:none;}
+  .hero h1{font-size:2.2rem;}
+  .hs{padding:4rem 1.5rem;}
+  .fg3{grid-template-columns:1fr;}
+  .hcta{margin:0 1.5rem 4rem;padding:2.5rem 1.5rem;}
+  .dlayout{grid-template-columns:1fr;}
+  .dsidebar{display:none;}
+  .scards{grid-template-columns:1fr 1fr;}
+  .dgrid{grid-template-columns:1fr;}
+  .twrap{grid-template-columns:1fr;padding:0 1rem;}
+  .tsb{position:static;}
+  .pstats,.pmain{grid-template-columns:1fr 1fr;padding:0 1rem;}
+  .swg{grid-template-columns:1fr;}
+  .alayout{grid-template-columns:1fr;}
+  .stgrid{grid-template-columns:1fr;}
+  .pricecards{grid-template-columns:1fr;}
+  .fr2,.fr3{grid-template-columns:1fr;}
+  .ldopts{grid-template-columns:1fr;}
+  .rcards{grid-template-columns:1fr 1fr;}
+  .qwrap,.swrap,.awrap,.setwrap,.privwrap{padding:0 1rem;}
+}
+
+/* DYSLEXIA FONT MODES */
+body.font-opendyslexic *{font-family:'OpenDyslexic',sans-serif!important;line-height:2!important;letter-spacing:.05em!important;}
+body.font-lexend *{font-family:'Lexend',sans-serif!important;line-height:1.95!important;letter-spacing:.03em!important;}
+body.font-atkinson *{font-family:'Atkinson Hyperlegible',sans-serif!important;line-height:1.9!important;letter-spacing:.04em!important;}
+body.font-comic *{font-family:'Comic Sans MS','Comic Sans',cursive!important;line-height:2!important;letter-spacing:.04em!important;}
+body[class*="font-"] p,body[class*="font-"] li,body[class*="font-"] .msg{font-size:1.02rem!important;}
+
+/* FONT PICKER PANEL */
+.font-panel{position:fixed;top:65px;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--gold-bdr);border-radius:9px;z-index:998;display:none;box-shadow:0 20px 60px rgba(0,0,0,.65);min-width:340px;max-width:94vw;}
+.font-panel.show{display:block;}
+.fp-head{padding:.9rem 1.3rem;border-bottom:1px solid var(--gold-bdr);display:flex;justify-content:space-between;align-items:center;}
+.fp-head h4{font-family:var(--fd);font-size:1rem;font-weight:700;}
+.fp-close{background:none;border:none;color:var(--wd);cursor:pointer;font-size:1.1rem;font-family:var(--ff);}
+.fp-body{padding:1.2rem 1.3rem;}
+.fp-desc{font-size:.79rem;color:var(--wd);margin-bottom:1rem;line-height:1.6;}
+.font-opts{display:flex;flex-direction:column;gap:.55rem;}
+.fo{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;border:1px solid var(--gold-bdr);border-radius:6px;cursor:pointer;transition:all .2s;}
+.fo:hover,.fo.on{border-color:var(--gold);background:var(--gold-dim);}
+.fo-left{display:flex;flex-direction:column;gap:.2rem;}
+.fo-name{font-size:.92rem;font-weight:600;}
+.fo-sample{font-size:.78rem;color:var(--wd);}
+.fo-name.od{font-family:'OpenDyslexic',sans-serif;}
+.fo-name.lx{font-family:'Lexend',sans-serif;}
+.fo-name.ah{font-family:'Atkinson Hyperlegible',sans-serif;}
+.fo-name.cs{font-family:'Comic Sans MS',cursive;}
+.fo-badge{font-size:.65rem;padding:.2rem .55rem;border-radius:20px;background:var(--gold-dim);border:1px solid var(--gold-bdr);color:var(--gold);font-weight:600;white-space:nowrap;}
+.fo-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--gold-bdr);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;transition:all .2s;}
+.fo.on .fo-check{background:var(--gold);border-color:var(--gold);color:var(--bg);}
+.fp-reset{margin-top:.85rem;width:100%;text-align:center;font-size:.78rem;color:var(--wd);cursor:pointer;background:none;border:none;font-family:var(--ff);padding:.5rem;transition:color .2s;}
+.fp-reset:hover{color:var(--gold);}
+.fp-preview{margin-top:.9rem;padding:.85rem 1rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:6px;}
+.fp-preview p{font-size:.85rem;color:var(--wd);line-height:1.75;}
+.fp-preview .pv-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem;}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="go('home')">Lumina <span>AI</span></div>
+  <ul class="nav-links">
+    <li><a id="nav-home" class="on" onclick="go('home')">Home</a></li>
+    <li><a id="nav-dashboard" onclick="go('dashboard')">Dashboard</a></li>
+    <li><a id="nav-tutor" onclick="go('tutor')">AI Tutor</a></li>
+    <li><a id="nav-questions" onclick="go('questions')">Questions</a></li>
+    <li><a id="nav-progress" onclick="go('progress')">Progress</a></li>
+    <li><a id="nav-strengths" onclick="go('strengths')">Strengths</a></li>
+    <li><a id="nav-assignments" onclick="go('assignments')">Assignments</a></li>
+    <li><a id="nav-pricing" onclick="go('pricing')">Pricing</a></li>
+    <li><a id="nav-settings" onclick="go('settings')">Settings</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="adhd-pill" id="fontBtn" onclick="toggleFontPanel()" style="margin-right:.1rem">♿ Fonts</button>
+    <button class="adhd-pill" id="adhdBtn" onclick="toggleADHD()">
+      <div class="adhd-dot"></div>ADHD Friendly
+    </button>
+    <div class="nb" onclick="toggleNotif()">🔔<div class="nbadge" id="nbadge">3</div></div>
+    <button class="btn btn-o" style="font-size:.76rem;padding:.48rem .95rem" onclick="go('signup')">Sign Up</button>
+    <button class="btn btn-g" style="font-size:.76rem;padding:.48rem .95rem" onclick="go('signup')">Get Started</button>
+  </div>
+</nav>
+
+<!-- NOTIFICATION PANEL -->
+<div class="npanel" id="npanel">
+  <div class="nhead"><h4>Notifications</h4><button class="nclear" onclick="clearNotifs()">Mark all read</button></div>
+  <div class="ni nunr"><div class="nico">📋</div><div class="nb2"><strong>New Assignment</strong><p>Mr Smith set "Algebra Worksheet" — due 28 Feb</p><div class="ntime">10 mins ago</div></div></div>
+  <div class="ni nunr"><div class="nico">🧠</div><div class="nb2"><strong>AI Tutor Ready</strong><p>Your last session notes are ready to review</p><div class="ntime">1 hour ago</div></div></div>
+  <div class="ni nunr"><div class="nico">🎯</div><div class="nb2"><strong>New Insight</strong><p>You improved 8% in Mathematics this week!</p><div class="ntime">3 hours ago</div></div></div>
+  <div class="ni"><div class="nico">📈</div><div class="nb2"><strong>Weekly Report</strong><p>Your progress report for this week is ready</p><div class="ntime">Yesterday</div></div></div>
+</div>
+
+<!-- FEEDBACK -->
+
+<!-- DYSLEXIA FONT PANEL -->
+<div class="font-panel" id="fontPanel">
+  <div class="fp-head">
+    <h4>♿ Dyslexia-Friendly Fonts</h4>
+    <button class="fp-close" onclick="closeFontPanel()">✕</button>
+  </div>
+  <div class="fp-body">
+    <p class="fp-desc">Choose a font designed to be easier to read for people with dyslexia, ADHD, or visual processing differences.</p>
+    <div class="fp-opts">
+      <div class="fo" id="fo-opendyslexic" onclick="setFont('opendyslexic')">
+        <div class="fo-left">
+          <span class="fo-name od">OpenDyslexic</span>
+          <span class="fo-sample" style="font-family:'OpenDyslexic',sans-serif">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span class="fo-badge">Most Popular</span>
+          <div class="fo-check">✓</div>
+        </div>
+      </div>
+      <div class="fo" id="fo-lexend" onclick="setFont('lexend')">
+        <div class="fo-left">
+          <span class="fo-name lx">Lexend</span>
+          <span class="fo-sample" style="font-family:'Lexend',sans-serif">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span class="fo-badge">Google Fonts</span>
+          <div class="fo-check">✓</div>
+        </div>
+      </div>
+      <div class="fo" id="fo-atkinson" onclick="setFont('atkinson')">
+        <div class="fo-left">
+          <span class="fo-name ah">Atkinson Hyperlegible</span>
+          <span class="fo-sample" style="font-family:'Atkinson Hyperlegible',sans-serif">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span class="fo-badge">High Clarity</span>
+          <div class="fo-check">✓</div>
+        </div>
+      </div>
+      <div class="fo" id="fo-comic" onclick="setFont('comic')">
+        <div class="fo-left">
+          <span class="fo-name cs">Comic Sans MS</span>
+          <span class="fo-sample" style="font-family:'Comic Sans MS',cursive">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span class="fo-badge">Classic Choice</span>
+          <div class="fo-check">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="fp-preview" id="fpPreview">
+      <div class="pv-label">Preview</div>
+      <p id="fpPreviewText">This is how your chosen font will look across the platform. Easy to read text helps you focus on learning, not decoding words.</p>
+    </div>
+    <button class="fp-reset" onclick="resetFont()">✕ Reset to default font</button>
+  </div>
+</div>
+
+<div class="fbfl">
+  <div class="fbmod" id="fbmod">
+    <h4>Your Feedback ✦</h4>
+    <div class="stars"><span class="star" onclick="rateStar(1)">★</span><span class="star" onclick="rateStar(2)">★</span><span class="star" onclick="rateStar(3)">★</span><span class="star" onclick="rateStar(4)">★</span><span class="star" onclick="rateStar(5)">★</span></div>
+    <textarea placeholder="How can we improve your experience?"></textarea>
+    <button class="btn btn-g" style="width:100%;padding:.6rem" onclick="submitFB()">Submit</button>
+  </div>
+  <button class="fbbtn" onclick="toggleFB()">💬 Feedback</button>
+</div>
+
+<!-- COOKIE -->
+<div class="ckb" id="ckb">
+  <p>We use cookies to improve your experience and comply with GDPR. See our <a onclick="go('privacy')">Privacy Policy</a>.</p>
+  <div class="ckbtns">
+    <button class="btn btn-o" style="font-size:.76rem;padding:.48rem .95rem" onclick="rejectCookies()">Reject</button>
+    <button class="btn btn-g" style="font-size:.76rem;padding:.48rem .95rem" onclick="acceptCookies()">Accept All</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════ HOME ════════════════════════ -->
+<div id="home-page" class="page on">
+  <section class="hero">
+    <div class="hg"></div>
+    <div class="orb o1"></div><div class="orb o2"></div>
+    <div class="hp">✦ UK GCSE &amp; A-Level Learning Platform</div>
+    <h1>The <span class="g">Smartest Way</span><br>to Prepare for Your Exams</h1>
+    <p>AI-powered tutoring, personalised question papers, teacher assignments, and real-time progress tracking — built for <em>every</em> learner, including ADHD, dyslexia, and other learning differences.</p>
+    <div class="hsrow">
+      <input class="hei" id="heroEmail" type="email" placeholder="Enter your email address">
+      <button class="btn btn-g btn-lg" onclick="heroSignup()">Start Learning Free</button>
+    </div>
+    <div class="htrust">
+      <span class="ht">No credit card required</span>
+      <span class="ht">All UK exam boards</span>
+      <span class="ht">ADHD &amp; dyslexia friendly</span>
+      <span class="ht">GDPR compliant</span>
+    </div>
+  </section>
+  <div class="sbar">
+    <div class="si"><div class="sn">12k+</div><div class="sl">Active Students</div></div>
+    <div class="si"><div class="sn">98%</div><div class="sl">Satisfaction Rate</div></div>
+    <div class="si"><div class="sn">1M+</div><div class="sl">Questions Generated</div></div>
+    <div class="si"><div class="sn">42%</div><div class="sl">Average Grade Boost</div></div>
+  </div>
+  <div class="hs">
+    <div class="sh"><p class="ey">Platform Features</p><h2>Everything You Need to <span class="g">Achieve Top Grades</span></h2></div>
+    <div class="fg3">
+      <div class="fc" onclick="go('questions')"><div class="fi">📄</div><h3>AI Question Papers</h3><p>Generate custom exam papers for any subject and exam board — tailored to your learning profile by Claude AI.</p><span class="fl">Generate now →</span></div>
+      <div class="fc" onclick="go('tutor')"><div class="fi">🧠</div><h3>Private AI Tutor</h3><p>Your personal Claude AI tutor available 24/7. Step-by-step explanations adapted to how you learn best.</p><span class="fl">Start learning →</span></div>
+      <div class="fc" onclick="go('progress')"><div class="fi">📈</div><h3>Progress Tracker</h3><p>Visual dashboards showing accuracy, study streaks, and performance trends across all subjects.</p><span class="fl">View progress →</span></div>
+      <div class="fc" onclick="go('strengths')"><div class="fi">🎯</div><h3>Strengths &amp; Weaknesses</h3><p>AI analysis identifies exactly which topics need attention and gives you a prioritised action plan.</p><span class="fl">Analyse now →</span></div>
+      <div class="fc" onclick="go('assignments')"><div class="fi">📋</div><h3>Teacher Assignments</h3><p>Teachers set homework, track submissions, and use AI to auto-mark. Students get instant AI hints.</p><span class="fl">View assignments →</span></div>
+      <div class="fc" onclick="go('signup')"><div class="fi">♿</div><h3>Accessibility First</h3><p>ADHD-friendly fonts, dyslexia support, high contrast, and AI that adapts to every learning difficulty.</p><span class="fl">Learn more →</span></div>
+    </div>
+  </div>
+  <div class="hs" style="padding-top:0">
+    <div class="sh"><p class="ey">Subjects</p><h2>All Major <span class="g">UK Curriculum</span> Subjects</h2></div>
+    <div class="sg">
+      <div class="sc"><div class="si2">🔢</div><div class="sn2">Mathematics</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">📖</div><div class="sn2">English</div><div class="sl2">Lang • Lit</div></div>
+      <div class="sc"><div class="si2">🧬</div><div class="sn2">Biology</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">⚗️</div><div class="sn2">Chemistry</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">⚡</div><div class="sn2">Physics</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">💰</div><div class="sn2">Economics</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">🏛️</div><div class="sn2">History</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">🌍</div><div class="sn2">Geography</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">💻</div><div class="sn2">Computer Sci</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">🇫🇷</div><div class="sn2">French</div><div class="sl2">GCSE • A-Level</div></div>
+      <div class="sc"><div class="si2">📐</div><div class="sn2">Further Maths</div><div class="sl2">A-Level</div></div>
+      <div class="sc"><div class="si2">🎭</div><div class="sn2">Drama</div><div class="sl2">GCSE</div></div>
+    </div>
+  </div>
+  <div class="hcta">
+    <h2>Education should be accessible <span class="g">for everyone</span></h2>
+    <p>Built for every type of learner — especially those who've struggled with traditional education.</p>
+    <button class="btn btn-g btn-lg" onclick="go('signup')">Create Free Account</button>
+  </div>
+</div>
+
+<!-- ════════════════════════ SIGNUP ════════════════════════ -->
+<div id="signup-page" class="page">
+  <div class="scard">
+    <!-- STEP 1: Account -->
+    <div class="sstep on" id="s1">
+      <div class="sdots"><div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div></div>
+      <h2>Create Account</h2>
+      <p class="ssub">Join Lumina AI and start learning smarter</p>
+      <div class="pcards">
+        <div class="pc on" onclick="selPlan(this)"><div class="pn2">Student</div><div class="pp">£60</div><div class="pcyc">per month</div></div>
+        <div class="pc" onclick="selPlan(this)"><div class="pn2">Homeschool</div><div class="pp">£200</div><div class="pcyc">per month</div></div>
+      </div>
+      <div class="fg"><label>Full Name</label><input id="s1name" type="text" placeholder="Your full name"></div>
+      <div class="fg"><label>Email Address</label><input id="s1email" type="email" placeholder="you@email.com"></div>
+      <div class="fg"><label>Password</label><input id="s1pass" type="password" placeholder="Create a strong password (8+ characters)"></div>
+      <button class="btn btn-g btn-w" onclick="step(2)">Continue →</button>
+      <div class="adiv"><span>Already have an account?</span></div>
+      <div class="aswitch"><a onclick="showDash()">Sign in here →</a></div>
+    </div>
+    <!-- STEP 2: About You -->
+    <div class="sstep" id="s2">
+      <div class="sdots"><div class="sdot"></div><div class="sdot on"></div><div class="sdot"></div></div>
+      <h2>Tell Us About You</h2>
+      <p class="ssub">This helps us personalise Lumina AI for you</p>
+      <div class="rcards">
+        <div class="rc on" id="rStudent" onclick="selRole(this,'student')"><div class="ri">🎓</div><div class="rn">Student</div></div>
+        <div class="rc" id="rTeacher" onclick="selRole(this,'teacher')"><div class="ri">👩‍🏫</div><div class="rn">Teacher</div></div>
+        <div class="rc" id="rParent" onclick="selRole(this,'parent')"><div class="ri">👨‍👩‍👧</div><div class="rn">Parent</div></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label>Year Group</label><select id="s2year"><option>Year 9</option><option>Year 10</option><option>Year 11</option><option>Year 12</option><option>Year 13</option></select></div>
+        <div class="fg"><label>Primary Subject</label><select id="s2subj"><option>Mathematics</option><option>English</option><option>Science</option><option>History</option><option>Economics</option><option>Geography</option></select></div>
+      </div>
+      <div class="fg"><label>Exam Board</label><select id="s2board"><option>AQA</option><option>Edexcel</option><option>OCR</option><option>WJEC</option><option>CCEA</option></select></div>
+      <div style="display:flex;gap:.65rem">
+        <button class="btn btn-o" style="flex:1" onclick="step(1)">← Back</button>
+        <button class="btn btn-g" style="flex:2" onclick="step(3)">Continue →</button>
+      </div>
+    </div>
+    <!-- STEP 3: Learning Profile -->
+    <div class="sstep" id="s3">
+      <div class="sdots"><div class="sdot"></div><div class="sdot"></div><div class="sdot on"></div></div>
+      <h2>Learning Profile</h2>
+      <p class="ssub">Optional — but helps our AI support you better</p>
+      <div class="ldsec">
+        <h4>♿ Do you have any learning differences?</h4>
+        <p>Lumina AI adapts questions, fonts, and explanations to support you. Selecting these turns on helpful features automatically.</p>
+        <div class="ldopts">
+          <div class="ldo" onclick="toggleLD(this,'adhd')"><input type="checkbox"><div class="ldt"><strong>ADHD</strong><span>Shorter tasks, focus breaks, clear structure</span></div></div>
+          <div class="ldo" onclick="toggleLD(this,'dyslexia')"><input type="checkbox"><div class="ldt"><strong>Dyslexia</strong><span>OpenDyslexic font, extra spacing, chunked text</span></div></div>
+          <div class="ldo" onclick="toggleLD(this,'dyscalculia')"><input type="checkbox"><div class="ldt"><strong>Dyscalculia</strong><span>Visual maths, step-by-step number work</span></div></div>
+          <div class="ldo" onclick="toggleLD(this,'autism')"><input type="checkbox"><div class="ldt"><strong>Autism Spectrum</strong><span>Predictable structure, literal explanations</span></div></div>
+          <div class="ldo" onclick="toggleLD(this,'visual')"><input type="checkbox"><div class="ldt"><strong>Visual Impairment</strong><span>High contrast, larger text options</span></div></div>
+          <div class="ldo" onclick="toggleLD(this,'none')"><input type="checkbox"><div class="ldt"><strong>No Specific Needs</strong><span>Standard experience</span></div></div>
+        </div>
+      </div>
+      <div class="gdpr">
+        <input type="checkbox" id="gdprChk">
+        <p>I have read and agree to the <a onclick="go('privacy')">Privacy Policy</a>. My data is stored securely and used only to personalise my learning. I can request deletion at any time.</p>
+      </div>
+      <div style="display:flex;gap:.65rem">
+        <button class="btn btn-o" style="flex:1" onclick="step(2)">← Back</button>
+        <button class="btn btn-g" style="flex:2" onclick="completeSignup()">Create Account ✦</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ DASHBOARD ════════════════════════ -->
+<div id="dashboard-page" class="page" style="padding-bottom:0">
+  <div class="dlayout">
+    <div class="dsidebar">
+      <div class="duser">
+        <div class="dava">🎓</div>
+        <div class="dname" id="dname">Student</div>
+        <div class="dplan">Student Plan · <span style="color:var(--green)">Active</span></div>
+        <div id="dlpbadges" style="margin-top:.5rem"></div>
+      </div>
+      <ul class="dnav">
+        <li><a onclick="go('dashboard')" class="on">📊 Overview</a></li>
+        <li><a onclick="go('tutor')">🧠 AI Tutor</a></li>
+        <li><a onclick="go('questions')">📄 Question Papers</a></li>
+        <li><a onclick="go('progress')">📈 My Progress</a></li>
+        <li><a onclick="go('strengths')">🎯 Strengths</a></li>
+        <li><a onclick="go('assignments')">📋 Assignments</a></li>
+        <li><a onclick="go('settings')">⚙️ Settings</a></li>
+        <li><a onclick="go('pricing')">💎 Upgrade Plan</a></li>
+      </ul>
+    </div>
+    <div class="dmain">
+      <div class="dwelcome" style="margin-bottom:1.2rem">
+        <h2 id="dwelcome">Welcome back ✦</h2>
+        <p style="color:var(--wd);font-size:.87rem;margin-top:.25rem">You've studied 3 hours this week. Keep it up!</p>
+      </div>
+      <div class="ano" id="adhdNotice">
+        <span>♿</span>
+        <span id="adhdNoticeText">ADHD-friendly mode is active. Questions are broken into smaller steps for you.</span>
+      </div>
+      <div class="scards">
+        <div class="scc"><div class="sclbl">Questions Answered</div><div class="scval">1,247</div><div class="scsub">This month</div><div class="scup">↑ +18% vs last month</div></div>
+        <div class="scc"><div class="sclbl">Overall Accuracy</div><div class="scval">78%</div><div class="scsub">All subjects</div><div class="scup">↑ +6% this week</div></div>
+        <div class="scc"><div class="sclbl">Study Streak</div><div class="scval">14</div><div class="scsub">Days in a row</div><div class="scup">🔥 Personal best!</div></div>
+        <div class="scc"><div class="sclbl">Topics Mastered</div><div class="scval">23</div><div class="scsub">Out of 64 total</div><div class="scup">↑ 3 new this week</div></div>
+      </div>
+      <div class="dgrid">
+        <div class="cbox" style="height:400px">
+          <div class="chd"><div class="cava">🧠</div><div class="cinf"><h4>Lumina AI Tutor</h4><p id="dsubjlbl">Mathematics — AQA Higher GCSE</p></div><div class="conl"></div></div>
+          <div class="cmsgs" id="dmsgs"><div class="msg ai">Hello! I'm your Lumina AI tutor. 👋 What would you like to work on today?</div></div>
+          <div class="cfoot"><input id="dchin" type="text" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')dsend()"><button onclick="dsend()" id="dsendBtn">Send</button></div>
+        </div>
+        <div class="pn">
+          <h3>📊 Subject Progress</h3>
+          <div class="spb"><div class="spr"><span>Mathematics</span><span>84%</span></div><div class="spbar"><div class="spfill" style="width:84%"></div></div></div>
+          <div class="spb"><div class="spr"><span>Economics</span><span>71%</span></div><div class="spbar"><div class="spfill" style="width:71%"></div></div></div>
+          <div class="spb"><div class="spr"><span>English Lit</span><span>76%</span></div><div class="spbar"><div class="spfill" style="width:76%"></div></div></div>
+          <div class="spb"><div class="spr"><span>Physics</span><span>58%</span></div><div class="spbar"><div class="spfill" style="width:58%"></div></div></div>
+          <div class="spb"><div class="spr"><span>History</span><span>89%</span></div><div class="spbar"><div class="spfill" style="width:89%"></div></div></div>
+          <button class="btn btn-o btn-w" style="margin-top:.9rem;padding:.65rem" onclick="go('progress')">View Full Progress →</button>
+        </div>
+        <div class="pn">
+          <h3>⚡ Recent Activity</h3>
+          <div class="ai"><div class="aico">📝</div><div class="atxt"><strong>Maths Paper Completed</strong>Algebra — 9/10 correct</div><div class="atm">2h ago</div></div>
+          <div class="ai"><div class="aico">📋</div><div class="atxt"><strong>Assignment Submitted</strong>History — WWI Essay</div><div class="atm">Yesterday</div></div>
+          <div class="ai"><div class="aico">🎯</div><div class="atxt"><strong>Topic Mastered</strong>Quadratic equations 95%</div><div class="atm">2 days ago</div></div>
+          <button class="btn btn-o btn-w" style="margin-top:.9rem;padding:.65rem" onclick="go('assignments')">View Assignments →</button>
+        </div>
+        <div class="pn">
+          <h3>🚀 Quick Actions</h3>
+          <button class="btn btn-g btn-w" style="margin-bottom:.65rem" onclick="go('questions')">📄 Generate Practice Paper</button>
+          <button class="btn btn-o btn-w" style="margin-bottom:.65rem" onclick="go('tutor')">🧠 Start Tutor Session</button>
+          <button class="btn btn-o btn-w" style="margin-bottom:.65rem" onclick="go('strengths')">🎯 Strengths Analysis</button>
+          <button class="btn btn-o btn-w" onclick="go('assignments')">📋 View Assignments</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ AI TUTOR ════════════════════════ -->
+<div id="tutor-page" class="page">
+  <div class="ph">
+    <p class="ey">Private AI Tutor</p>
+    <h1>Your Personal <span class="g">AI Tutor</span></h1>
+    <p>Powered by Claude AI. Ask anything — get step-by-step explanations adapted to your learning style and exam board.</p>
+  </div>
+  <div class="twrap">
+    <div class="tsb">
+      <p class="tst">Select Subject</p>
+      <ul class="slist" id="slist">
+        <li class="on" onclick="selSubj(this,'Mathematics','AQA Higher GCSE')">🔢 Mathematics <span class="lvlb">Higher</span></li>
+        <li onclick="selSubj(this,'Economics','A-Level')">💰 Economics <span class="lvlb">A-Level</span></li>
+        <li onclick="selSubj(this,'Physics','GCSE')">⚡ Physics <span class="lvlb">GCSE</span></li>
+        <li onclick="selSubj(this,'Chemistry','GCSE')">⚗️ Chemistry <span class="lvlb">GCSE</span></li>
+        <li onclick="selSubj(this,'Biology','GCSE')">🧬 Biology <span class="lvlb">GCSE</span></li>
+        <li onclick="selSubj(this,'English Literature','GCSE')">📖 English Lit <span class="lvlb">GCSE</span></li>
+        <li onclick="selSubj(this,'History','A-Level')">🏛️ History <span class="lvlb">A-Level</span></li>
+        <li onclick="selSubj(this,'Computer Science','GCSE')">💻 Computer Sci <span class="lvlb">GCSE</span></li>
+        <li onclick="selSubj(this,'French','GCSE')">🇫🇷 French <span class="lvlb">GCSE</span></li>
+      </ul>
+      <div class="qacts">
+        <p class="tst">Quick Actions</p>
+        <button class="qab" onclick="qa('Explain the most important concept I need to know for my upcoming exam. Make it clear and simple.')">💡 Explain a concept</button>
+        <button class="qab" onclick="qa('Give me a practice exam question with a full mark scheme answer')">📝 Practice question</button>
+        <button class="qab" onclick="qa('What are the top exam technique tips for this subject to maximise marks?')">🎯 Exam technique</button>
+        <button class="qab" onclick="qa('What are the most commonly tested topics in this subject?')">📊 Common exam topics</button>
+        <button class="qab" onclick="qa('I am really struggling with this subject. Can you explain the basics in the simplest possible way with real life examples?')">🔄 Explain simply</button>
+      </div>
+    </div>
+    <div class="tbox">
+      <div class="chd"><div class="cava">🧠</div><div class="cinf"><h4>Lumina AI Tutor</h4><p id="tsubjlbl">Mathematics — AQA Higher GCSE</p></div><div class="conl"></div></div>
+      <div class="cmsgs" id="tmsgs" style="flex:1">
+        <div class="msg ai">Hello! I'm your Lumina AI tutor, powered by Claude. 👋
+
+I'm ready to help with Mathematics — or switch subjects on the left.
+
+I can explain concepts step-by-step, work through problems with you, create practice questions, or give exam technique advice.
+
+What would you like to work on today?</div>
+      </div>
+      <div class="cfoot"><input id="tin" type="text" placeholder="Ask your tutor anything..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)tsend()"><button onclick="tsend()" id="tsendBtn">Send ✦</button></div>
+      <p class="anote">Powered by Claude AI — connect your API key in Vercel for live responses</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ QUESTIONS ════════════════════════ -->
+<div id="questions-page" class="page">
+  <div class="ph">
+    <p class="ey">AI Question Papers</p>
+    <h1>Generate Your <span class="g">Custom Exam Paper</span></h1>
+    <p>Claude AI generates realistic exam-style questions aligned to your exact syllabus — adapted to your learning profile.</p>
+  </div>
+  <div class="qwrap">
+    <div class="adhd-hint" id="qadhdHint">♿ <strong>ADHD Mode Active</strong> — Questions are broken into clear, numbered steps. Take a break between questions if you need to.</div>
+    <div class="pn" style="margin-bottom:1.4rem">
+      <h3>📄 Configure Your Paper</h3>
+      <div class="fr3">
+        <div class="fg"><label>Subject</label><select id="qs"><option>Mathematics</option><option>English Language</option><option>English Literature</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>History</option><option>Geography</option><option>Economics</option><option>Computer Science</option><option>French</option></select></div>
+        <div class="fg"><label>Exam Board</label><select id="qb"><option>AQA</option><option>Edexcel</option><option>OCR</option><option>WJEC</option><option>CCEA</option></select></div>
+        <div class="fg"><label>Level</label><select id="ql"><option>Foundation GCSE</option><option>Higher GCSE</option><option>AS Level</option><option>A Level</option></select></div>
+      </div>
+      <div class="fr3">
+        <div class="fg"><label>Number of Questions</label><select id="qnum"><option value="3">3 Questions</option><option value="5" selected>5 Questions</option><option value="8">8 Questions</option><option value="10">10 Questions</option></select></div>
+        <div class="fg"><label>Question Type</label><select id="qt"><option>Mixed</option><option>Short Answer</option><option>Extended Writing</option><option>Calculations</option><option>Multiple Choice</option></select></div>
+        <div class="fg"><label>Target Grade</label><select id="qd"><option>Mixed</option><option>Grade 4–5</option><option>Grade 6–7</option><option>Grade 8–9</option></select></div>
+      </div>
+      <div class="fg"><label>Specific Topics (optional)</label><input id="qfocus" type="text" placeholder="e.g. Trigonometry, Cell Biology, Causes of WWI..."></div>
+      <button class="btn btn-g btn-w" style="margin-top:.4rem" onclick="genPaper()" id="genBtn">✦ Generate with Claude AI</button>
+    </div>
+    <div class="qout" id="qout">
+      <div class="pn">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.9rem;margin-bottom:1.7rem">
+          <div><h3 id="ptitle" style="margin-bottom:0;font-size:1.2rem">Practice Paper</h3><p id="pmeta" style="font-size:.75rem;color:var(--wd);margin-top:.28rem"></p></div>
+          <div style="display:flex;gap:.55rem">
+            <button class="btn btn-o" style="font-size:.76rem;padding:.48rem .9rem" onclick="window.print()">📄 Print</button>
+            <button class="btn btn-o" style="font-size:.76rem;padding:.48rem .9rem" onclick="genPaper()">🔄 Regenerate</button>
+          </div>
+        </div>
+        <div id="qcont"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ PROGRESS ════════════════════════ -->
+<div id="progress-page" class="page">
+  <div class="ph">
+    <p class="ey">Progress Tracker</p>
+    <h1>Your <span class="g">Learning Progress</span></h1>
+    <p>Track your performance, accuracy, and improvements across every subject in real time.</p>
+  </div>
+  <div class="pstats">
+    <div class="scc"><div class="sclbl">Questions Answered</div><div class="scval">1,247</div><div class="scsub">This month</div><div class="scup">↑ +18%</div></div>
+    <div class="scc"><div class="sclbl">Overall Accuracy</div><div class="scval">78%</div><div class="scsub">All subjects</div><div class="scup">↑ +6% this week</div></div>
+    <div class="scc"><div class="sclbl">Study Streak</div><div class="scval">14</div><div class="scsub">Days in a row</div><div class="scup">🔥 Personal best!</div></div>
+    <div class="scc"><div class="sclbl">Topics Mastered</div><div class="scval">23</div><div class="scsub">Out of 64 total</div><div class="scup">↑ 3 new this week</div></div>
+  </div>
+  <div class="pmain">
+    <div class="pn">
+      <h3>📊 Subject Performance</h3>
+      <div class="spb"><div class="spr"><span>Mathematics</span><span>84%</span></div><div class="spbar"><div class="spfill" style="width:84%"></div></div></div>
+      <div class="spb"><div class="spr"><span>Economics</span><span>71%</span></div><div class="spbar"><div class="spfill" style="width:71%"></div></div></div>
+      <div class="spb"><div class="spr"><span>English Literature</span><span>76%</span></div><div class="spbar"><div class="spfill" style="width:76%"></div></div></div>
+      <div class="spb"><div class="spr"><span>Physics</span><span>58%</span></div><div class="spbar"><div class="spfill" style="width:58%"></div></div></div>
+      <div class="spb"><div class="spr"><span>History</span><span>89%</span></div><div class="spbar"><div class="spfill" style="width:89%"></div></div></div>
+      <div class="spb"><div class="spr"><span>Chemistry</span><span>63%</span></div><div class="spbar"><div class="spfill" style="width:63%"></div></div></div>
+    </div>
+    <div class="pn">
+      <h3>⚡ Recent Activity</h3>
+      <div class="ai"><div class="aico">📝</div><div class="atxt"><strong>Maths Paper Completed</strong>Algebra — 9/10 correct</div><div class="atm">2h ago</div></div>
+      <div class="ai"><div class="aico">🧠</div><div class="atxt"><strong>Tutor Session</strong>Economics — Supply &amp; Demand</div><div class="atm">5h ago</div></div>
+      <div class="ai"><div class="aico">📋</div><div class="atxt"><strong>Assignment Submitted</strong>History Essay — WWI</div><div class="atm">Yesterday</div></div>
+      <div class="ai"><div class="aico">🎯</div><div class="atxt"><strong>Topic Mastered</strong>Quadratic equations 95%</div><div class="atm">2 days ago</div></div>
+      <div class="ai"><div class="aico">📈</div><div class="atxt"><strong>Milestone!</strong>1,000 questions answered</div><div class="atm">3 days ago</div></div>
+    </div>
+    <div class="pn">
+      <h3>🔥 Study Streak — Last 4 Weeks</h3>
+      <p style="font-size:.77rem;color:var(--wd);margin-bottom:.95rem">Gold square = day studied ✦</p>
+      <div class="sgrid" id="sgrid"></div>
+      <p style="font-size:.76rem;color:var(--gold);margin-top:.82rem;text-align:center">🔥 14-day streak — keep going!</p>
+    </div>
+    <div class="pn">
+      <h3>🏆 Achievements</h3>
+      <div class="ai"><div class="aico">🥇</div><div class="atxt"><strong>Century Club</strong>100 questions answered</div><div class="atm">✦ Earned</div></div>
+      <div class="ai"><div class="aico">🔥</div><div class="atxt"><strong>On Fire</strong>7-day study streak</div><div class="atm">✦ Earned</div></div>
+      <div class="ai"><div class="aico">🎯</div><div class="atxt"><strong>Sharpshooter</strong>90%+ accuracy in a session</div><div class="atm">✦ Earned</div></div>
+      <div class="ai" style="opacity:.45"><div class="aico">💎</div><div class="atxt"><strong>Diamond Mind</strong>Master 50 topics</div><div class="atm">🔒 Locked</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ STRENGTHS ════════════════════════ -->
+<div id="strengths-page" class="page">
+  <div class="ph">
+    <p class="ey">AI Analysis</p>
+    <h1>Your <span class="g">Strengths &amp; Weaknesses</span></h1>
+    <p>Claude AI analyses your performance to identify where you excel and where focused revision will make the biggest difference.</p>
+  </div>
+  <div class="swrap">
+    <button class="btn btn-g btn-lg" style="width:100%;margin-bottom:1.4rem" onclick="runAnalysis()" id="analyzeBtn">🎯 Run AI Analysis on My Performance</button>
+    <div class="swg">
+      <div class="swp str">
+        <h3>💪 Your Strengths</h3>
+        <div class="swi"><div class="swd dg"></div><div class="swt">Algebraic Manipulation</div><div class="sws sg2">94%</div></div>
+        <div class="swi"><div class="swd dg"></div><div class="swt">Historical Source Analysis</div><div class="sws sg2">91%</div></div>
+        <div class="swi"><div class="swd dg"></div><div class="swt">Quadratic Equations</div><div class="sws sg2">89%</div></div>
+        <div class="swi"><div class="swd dg"></div><div class="swt">Supply &amp; Demand Theory</div><div class="sws sg2">86%</div></div>
+        <div class="swi"><div class="swd dg"></div><div class="swt">Literary Analysis — Poetry</div><div class="sws sg2">83%</div></div>
+      </div>
+      <div class="swp wk">
+        <h3>🎯 Focus Areas</h3>
+        <div class="swi"><div class="swd dr"></div><div class="swt">Trigonometry — 3D Problems</div><div class="sws sr">34%</div></div>
+        <div class="swi"><div class="swd dr"></div><div class="swt">Physics — Electricity Circuits</div><div class="sws sr">41%</div></div>
+        <div class="swi"><div class="swd dr"></div><div class="swt">Statistics — Hypothesis Testing</div><div class="sws sr">45%</div></div>
+        <div class="swi"><div class="swd dr"></div><div class="swt">Organic Chemistry</div><div class="sws sr">48%</div></div>
+        <div class="swi"><div class="swd dr"></div><div class="swt">Macroeconomics</div><div class="sws sr">52%</div></div>
+      </div>
+    </div>
+    <div class="recsp">
+      <div class="pnr"><h3>🤖 AI Recommendations — Priority Action Plan</h3></div>
+      <div id="recsout">
+        <div class="reci"><div class="prd ph2">!</div><div class="reb"><h4>Focus on Trigonometry — 3D Problems (34%)</h4><p>Appears frequently in Higher GCSE. Spend 2–3 sessions with the AI tutor on SOHCAHTOA in 3D contexts, then practice with generated papers.</p></div></div>
+        <div class="reci"><div class="prd ph2">!</div><div class="reb"><h4>Revise Electricity Circuits in Physics (41%)</h4><p>Circuit calculations are heavily tested in AQA Physics. Ask the tutor to walk through series and parallel circuits with worked examples.</p></div></div>
+        <div class="reci"><div class="prd pm2">~</div><div class="reb"><h4>Strengthen Statistics — Hypothesis Testing (45%)</h4><p>With focused practice you could push this above 70% quickly. Generate 10 practice questions on this topic today.</p></div></div>
+        <div class="reci"><div class="prd pl2">✓</div><div class="reb"><h4>Maintain your Algebra strengths (94%)</h4><p>Keep a weekly practice session to maintain this. These skills support your weaker topics like vectors and statistics.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ ASSIGNMENTS ════════════════════════ -->
+<div id="assignments-page" class="page">
+  <div class="ph">
+    <p class="ey">Assignments</p>
+    <h1>Teacher <span class="g">Assignments &amp; Homework</span></h1>
+    <p>Teachers set homework, track submissions, and give AI-powered feedback. Students view, complete, and submit assignments.</p>
+  </div>
+  <div class="awrap">
+    <div class="mtabs">
+      <button class="mtab on" onclick="switchMode('teacher',this)">👩‍🏫 Teacher View</button>
+      <button class="mtab" onclick="switchMode('student',this)">🎓 Student View</button>
+    </div>
+
+    <!-- TEACHER VIEW -->
+    <div id="tview">
+      <div class="alayout">
+        <div class="aform">
+          <h3>📋 Create New Assignment</h3>
+          <div class="fg"><label>Assignment Title</label><input id="atitle" type="text" placeholder="e.g. Algebra Homework — Week 3"></div>
+          <div class="fr2">
+            <div class="fg"><label>Subject</label><select id="asubj"><option>Mathematics</option><option>English Literature</option><option>History</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Economics</option><option>Geography</option><option>Computer Science</option></select></div>
+            <div class="fg"><label>Year Group</label><select id="ayear"><option>Year 9</option><option>Year 10</option><option>Year 11</option><option>Year 12</option><option>Year 13</option></select></div>
+          </div>
+          <div class="fr2">
+            <div class="fg"><label>Exam Board</label><select id="aboard"><option>AQA</option><option>Edexcel</option><option>OCR</option><option>WJEC</option></select></div>
+            <div class="fg"><label>Due Date</label><input id="adue" type="date"></div>
+          </div>
+          <div class="fg"><label>Instructions</label><textarea id="ainstr" placeholder="Describe the homework task, topics covered, and resources students should use..." style="height:95px;resize:none;"></textarea></div>
+          <div class="fg"><label>Max Marks</label><input id="amarks" type="number" placeholder="e.g. 20" min="1" max="100"></div>
+          <button class="btn btn-g btn-w" style="margin-bottom:.6rem" onclick="createAssign()">✦ Create &amp; Send Assignment</button>
+          <button class="btn btn-o btn-w" onclick="genAssignAI()">🤖 Generate Task with Claude AI</button>
+        </div>
+        <div>
+          <div class="pnr" style="margin-bottom:1.1rem"><h3 style="font-family:var(--fd);font-size:1.12rem;font-weight:700">📚 Active Assignments</h3><button class="btn btn-o" style="font-size:.75rem;padding:.42rem .85rem" onclick="go('progress')">Class Progress</button></div>
+          <div id="alist">
+            <div class="acard"><div class="ach"><div class="act"><h4>Quadratic Equations Worksheet</h4><p>Mathematics · Year 11 · AQA Higher</p></div><span class="ast s-new">Active</span></div><div class="ameta"><span>📅 28 Feb 2026</span><span>✏️ 20 marks</span><span>👥 24 students</span></div><div class="afoot"><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Opening submissions...')">Submissions (18/24)</button><button class="btn btn-g" style="font-size:.76rem;padding:.42rem .85rem" onclick="aiMark()">AI Mark</button></div></div>
+            <div class="acard"><div class="ach"><div class="act"><h4>Supply &amp; Demand Essay</h4><p>Economics · Year 12 · AQA A-Level</p></div><span class="ast s-due">Due Soon</span></div><div class="ameta"><span>📅 22 Feb 2026</span><span>✏️ 25 marks</span><span>👥 18 students</span></div><div class="afoot"><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Opening submissions...')">Submissions (12/18)</button><button class="btn btn-g" style="font-size:.76rem;padding:.42rem .85rem" onclick="aiMark()">AI Mark</button></div></div>
+            <div class="acard"><div class="ach"><div class="act"><h4>WWI Causes — Source Analysis</h4><p>History · Year 10 · Edexcel GCSE</p></div><span class="ast s-done">Completed</span></div><div class="ameta"><span>📅 14 Feb 2026</span><span>✏️ 15 marks</span><span>👥 28 students</span></div><div class="afoot"><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Opening results...')">Results (28/28)</button><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Generating class report...')">Class Report</button></div></div>
+          </div>
+          <div class="pn" style="margin-top:1.2rem">
+            <h3>👥 Class Overview</h3>
+            <div class="stgrid">
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">Sarah Ahmed</div><div class="sts" style="color:var(--green)">✦ 3/3 submitted</div></div></div>
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">Marcus Johnson</div><div class="sts" style="color:var(--gold)">✦ 2/3 submitted</div></div></div>
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">Priya Patel</div><div class="sts" style="color:var(--green)">✦ 3/3 submitted</div></div></div>
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">James O'Brien</div><div class="sts" style="color:var(--red)">✦ 1/3 submitted</div></div></div>
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">Aisha Williams</div><div class="sts" style="color:var(--green)">✦ 3/3 submitted</div></div></div>
+              <div class="sti"><div class="stav">👤</div><div><div class="stn">Tom Davies</div><div class="sts" style="color:var(--red)">✦ 0/3 submitted</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT VIEW -->
+    <div id="sview" style="display:none">
+      <div class="alayout">
+        <div>
+          <h3 style="font-family:var(--fd);font-size:1.12rem;font-weight:700;margin-bottom:1.1rem">📬 My Assignments</h3>
+          <div class="acard"><div class="ach"><div class="act"><h4>Quadratic Equations Worksheet</h4><p>Mathematics · Mr Smith · AQA Higher GCSE</p></div><span class="ast s-new">To Do</span></div><div class="ameta"><span>📅 Due: 28 Feb 2026</span><span>✏️ 20 marks</span></div><p style="font-size:.82rem;color:var(--wd);margin:.72rem 0;line-height:1.65">Complete all 10 questions on quadratic equations using factorisation and the quadratic formula. Show all working clearly.</p><div class="afoot"><button class="btn btn-g" style="font-size:.76rem;padding:.42rem .85rem" onclick="startAssign()">Start Assignment</button><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="selSubj({classList:{add:()=>{},remove:()=>{}}},'Mathematics','AQA Higher GCSE');go('tutor')">🧠 Ask AI Tutor</button></div></div>
+          <div class="acard"><div class="ach"><div class="act"><h4>Supply &amp; Demand Essay</h4><p>Economics · Mrs Khan · AQA A-Level</p></div><span class="ast s-due">Due Soon</span></div><div class="ameta"><span>📅 Due: 22 Feb 2026</span><span>✏️ 25 marks</span></div><p style="font-size:.82rem;color:var(--wd);margin:.72rem 0;line-height:1.65">Write a 600-word essay analysing how a minimum wage affects the labour market. Include a supply and demand diagram.</p><div class="afoot"><button class="btn btn-g" style="font-size:.76rem;padding:.42rem .85rem" onclick="startAssign()">Start Assignment</button><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="go('tutor')">🧠 Ask AI Tutor</button></div></div>
+          <div class="acard"><div class="ach"><div class="act"><h4>WWI Causes — Source Analysis</h4><p>History · Mr Thompson · Edexcel GCSE</p></div><span class="ast s-done">Submitted ✦</span></div><div class="ameta"><span>📅 Submitted: 13 Feb 2026</span><span>✏️ Score: 13/15</span></div><p style="font-size:.82rem;color:var(--green);margin:.72rem 0">Great work! Your source analysis was thorough. See AI feedback for improvement tips.</p><div class="afoot"><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="viewFeedback()">View AI Feedback</button></div></div>
+        </div>
+        <div class="aform">
+          <h3>📤 Submit Your Work</h3>
+          <div class="fg"><label>Assignment</label><select><option>Quadratic Equations Worksheet</option><option>Supply &amp; Demand Essay</option></select></div>
+          <div class="fg"><label>Your Answer</label><textarea id="sanswer" placeholder="Type your answers here..." style="height:190px;resize:none;"></textarea></div>
+          <button class="btn btn-g btn-w" style="margin-bottom:.58rem" onclick="submitWork()">📤 Submit for AI Marking</button>
+          <button class="btn btn-o btn-w" onclick="getHint()">🤖 Get AI Hint First</button>
+          <div id="hintbox" style="display:none;margin-top:.9rem;padding:1rem;background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:6px;font-size:.83rem;line-height:1.72;color:var(--wd);white-space:pre-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ SETTINGS ════════════════════════ -->
+<div id="settings-page" class="page">
+  <div class="ph">
+    <p class="ey">Settings</p>
+    <h1>Your <span class="g">Account Settings</span></h1>
+    <p>Manage your learning profile, accessibility features, and account preferences.</p>
+  </div>
+  <div class="setwrap">
+    <div class="setsec">
+      <h3>♿ Accessibility &amp; Learning Support</h3>
+      <div class="ldsum" id="ldSummary"><p style="font-size:.82rem;color:var(--wd)">No learning profile set. Sign up and complete your profile to enable personalised support.</p></div>
+      <div class="setrow"><div class="setinfo"><h4>ADHD-Friendly Mode</h4><p>OpenDyslexic font, increased line spacing, shorter questions</p></div><div class="tog" id="adhdTog" onclick="toggleTog('adhdTog','adhd')"></div></div>
+      <div class="setrow"><div class="setinfo"><h4>High Contrast Mode</h4><p>Stronger colour contrast for better readability</p></div><div class="tog" id="hcTog" onclick="toggleTog('hcTog','hc')"></div></div>
+      <div class="setrow"><div class="setinfo"><h4>Larger Text</h4><p>Increase base font size across the platform</p></div><div class="tog" id="ltTog" onclick="toggleTog('ltTog','lt')"></div></div>
+      <div class="setrow"><div class="setinfo"><h4>Reduce Animations</h4><p>Minimise moving elements on screen</p></div><div class="tog" id="raTog" onclick="toggleTog('raTog','ra')"></div></div>
+    </div>
+    <div class="setsec">
+      <h3>🔔 Notifications</h3>
+      <div class="setrow"><div class="setinfo"><h4>Assignment Reminders</h4><p>Get notified when homework is due soon</p></div><div class="tog on" id="notif1" onclick="toggleTog('notif1')"></div></div>
+      <div class="setrow"><div class="setinfo"><h4>Progress Updates</h4><p>Weekly report on your learning progress</p></div><div class="tog on" id="notif2" onclick="toggleTog('notif2')"></div></div>
+      <div class="setrow"><div class="setinfo"><h4>AI Tutor Responses</h4><p>Notify when your tutor session notes are ready</p></div><div class="tog on" id="notif3" onclick="toggleTog('notif3')"></div></div>
+    </div>
+    <div class="setsec">
+      <h3>📋 Learning Preferences</h3>
+      <div class="fg"><label>Primary Exam Board</label><select><option>AQA</option><option>Edexcel</option><option>OCR</option><option>WJEC</option><option>CCEA</option></select></div>
+      <div class="fr2">
+        <div class="fg"><label>Year Group</label><select><option>Year 9</option><option>Year 10</option><option>Year 11</option><option>Year 12</option><option>Year 13</option></select></div>
+        <div class="fg"><label>Primary Subject</label><select><option>Mathematics</option><option>English</option><option>Science</option><option>History</option><option>Economics</option></select></div>
+      </div>
+      <button class="btn btn-g" style="margin-top:.5rem" onclick="toast('Preferences saved ✦')">Save Preferences</button>
+    </div>
+    <div class="setsec">
+      <h3>🔐 Account &amp; GDPR</h3>
+      <div class="setrow"><div class="setinfo"><h4>Change Password</h4><p>Update your account password</p></div><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Password reset email sent ✦')">Change</button></div>
+      <div class="setrow"><div class="setinfo"><h4>Download My Data</h4><p>Export all your learning data (GDPR right)</p></div><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Data export requested — you will receive an email ✦')">Export</button></div>
+      <div class="setrow"><div class="setinfo"><h4>Delete My Account</h4><p>Permanently delete your account and all data</p></div><button class="btn btn-r" style="font-size:.76rem;padding:.42rem .85rem" onclick="confirmDelete()">Delete</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ PRICING ════════════════════════ -->
+<div id="pricing-page" class="page">
+  <div class="ph">
+    <p class="ey">Simple Pricing</p>
+    <h1>Invest in Your <span class="g">Education</span></h1>
+    <p>Both plans include every feature — AI Tutor, Question Papers, Assignments, Progress Tracker, Strengths Analyser, and full accessibility support.</p>
+  </div>
+  <div class="pricewrap">
+    <div class="pricecards">
+      <div class="prcard">
+        <h3>Student Plan</h3>
+        <div class="prprice"><sup>£</sup>60<span>/month</span></div>
+        <p class="prdesc">Perfect for individual students preparing for GCSEs or A-Levels.</p>
+        <ul class="prfl">
+          <li>Full access to Claude AI Tutor</li>
+          <li>Unlimited question paper generation</li>
+          <li>Strengths &amp; weaknesses analyser</li>
+          <li>Progress tracking dashboard</li>
+          <li>All exam boards — AQA, Edexcel, OCR</li>
+          <li>View &amp; complete teacher assignments</li>
+          <li>ADHD &amp; dyslexia accessibility modes</li>
+        </ul>
+        <button class="btn btn-o btn-w" onclick="go('signup')">Get Started</button>
+      </div>
+      <div class="prcard feat">
+        <div class="prbadge">Most Popular</div>
+        <h3>Homeschool Plan</h3>
+        <div class="prprice"><sup>£</sup>200<span>/month</span></div>
+        <p class="prdesc">Complete AI-powered homeschooling with full teacher tools.</p>
+        <ul class="prfl">
+          <li>Everything in Student Plan</li>
+          <li>Teacher assignment creation tools</li>
+          <li>Multiple student profiles</li>
+          <li>Full curriculum planning support</li>
+          <li>AI auto-marking &amp; feedback</li>
+          <li>Parent progress reporting</li>
+          <li>Priority support</li>
+        </ul>
+        <button class="btn btn-g btn-w" onclick="go('signup')">Subscribe ✦</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ PRIVACY ════════════════════════ -->
+<div id="privacy-page" class="page">
+  <div class="ph"><p class="ey">Legal</p><h1>Privacy <span class="g">Policy</span></h1><p>Last updated: February 2026 · GDPR Compliant</p></div>
+  <div class="privwrap">
+    <h2>1. Who We Are</h2>
+    <p>Lumina AI is an educational technology platform providing AI-powered tutoring and exam preparation for UK students. We are committed to protecting your personal data and complying with the General Data Protection Regulation (GDPR) and the UK Data Protection Act 2018.</p>
+    <h2>2. What Data We Collect</h2>
+    <ul>
+      <li>Name and email address (required for account creation)</li>
+      <li>Year group, exam board, and subject preferences</li>
+      <li>Learning profile including any declared learning differences (ADHD, dyslexia, etc.)</li>
+      <li>Questions answered, progress scores, and study activity</li>
+      <li>AI tutor conversations and feedback</li>
+    </ul>
+    <h2>3. Why We Collect It</h2>
+    <p>Your data is used solely to personalise your learning experience. We use it to tailor AI-generated questions, adapt explanations to your learning style, track your progress, and allow teachers to set and monitor assignments. We do not use your data for advertising.</p>
+    <h2>4. Learning Differences Data</h2>
+    <p>Information about learning differences (such as ADHD or dyslexia) is classified as sensitive personal data under GDPR. We collect it only with your explicit consent, store it encrypted, and use it solely to activate accessibility features. You can remove this information at any time in Settings.</p>
+    <h2>5. Children's Data</h2>
+    <p>We take children's privacy extremely seriously. For users under 13, we require parental consent before account creation. For users aged 13–17, we apply additional safeguards including limited data retention and no third-party data sharing.</p>
+    <h2>6. Your Rights Under GDPR</h2>
+    <ul>
+      <li><strong>Right of Access</strong> — Request a copy of all data we hold about you</li>
+      <li><strong>Right to Rectification</strong> — Correct inaccurate data</li>
+      <li><strong>Right to Erasure</strong> — Request deletion of your account and all data</li>
+      <li><strong>Right to Data Portability</strong> — Export your data in a readable format</li>
+      <li><strong>Right to Object</strong> — Object to how we process your data</li>
+    </ul>
+    <p>To exercise any of these rights, go to Settings → Account &amp; GDPR, or email privacy@luminaai.co.uk.</p>
+    <h2>7. Data Security</h2>
+    <p>All data is encrypted in transit (TLS) and at rest. We use industry-standard security practices and do not store passwords in plain text. Your data is stored on secure servers within the UK/EU.</p>
+    <h2>8. Data Sharing</h2>
+    <p>We do not sell, rent, or share your personal data with third parties for commercial purposes. The only exceptions are: Anthropic (Claude AI) for generating educational responses — data is processed but not stored, and Vercel for hosting infrastructure. Both are GDPR-compliant processors.</p>
+    <h2>9. Cookies</h2>
+    <p>We use essential cookies to keep you logged in and remember your accessibility preferences. We use optional analytics cookies to understand how the platform is used. You can accept or reject optional cookies via the banner shown on first visit.</p>
+    <h2>10. Contact Us</h2>
+    <p>For privacy questions: privacy@luminaai.co.uk | Lumina AI, UK</p>
+    <button class="btn btn-g" style="margin-top:1.5rem" onclick="go('home')">← Back to Platform</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+const state={
+  name:'',email:'',role:'student',year:'Year 11',subject:'Mathematics',board:'AQA',
+  lds:[],adhdOn:false,currentSubj:'Mathematics',tutorHistory:[],dashHistory:[]
+};
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  const pg=document.getElementById(id+'-page');
+  pg.classList.add('on');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('on'));
+  const n=document.getElementById('nav-'+id);
+  if(n)n.classList.add('on');
+  window.scrollTo(0,0);
+  closeAll();
+}
+function closeAll(){
+  document.getElementById('npanel').classList.remove('show');
+  document.getElementById('fbmod').classList.remove('show');
+  document.getElementById('fontPanel').classList.remove('show');
+}
+
+// ═══════════════════════════════════════
+// HERO SIGNUP
+// ═══════════════════════════════════════
+function heroSignup(){
+  const e=document.getElementById('heroEmail').value.trim();
+  if(e){document.getElementById('s1email').value=e;}
+  go('signup');
+}
+
+// ═══════════════════════════════════════
+// SIGNUP FLOW
+// ═══════════════════════════════════════
+function step(n){
+  if(n===2){
+    const nm=document.getElementById('s1name').value.trim();
+    const em=document.getElementById('s1email').value.trim();
+    const pw=document.getElementById('s1pass').value;
+    if(!nm){toast('Please enter your full name');return;}
+    if(!em||!em.includes('@')){toast('Please enter a valid email');return;}
+    if(pw.length<8){toast('Password must be at least 8 characters');return;}
+    state.name=nm;state.email=em;
+  }
+  document.querySelectorAll('.sstep').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+}
+function selPlan(el){document.querySelectorAll('.pc').forEach(p=>p.classList.remove('on'));el.classList.add('on');}
+function selRole(el,r){
+  state.role=r;
+  document.querySelectorAll('.rc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+function toggleLD(el,type){
+  const chk=el.querySelector('input[type=checkbox]');
+  if(chk)chk.checked=!chk.checked;
+  el.classList.toggle('on');
+  if(type==='none'){state.lds=[];document.querySelectorAll('.ldo').forEach(d=>d.classList.remove('on'));el.classList.add('on');if(chk)chk.checked=true;return;}
+  const i=state.lds.indexOf(type);
+  if(i>-1)state.lds.splice(i,1);else state.lds.push(type);
+  if(state.lds.includes('adhd')||state.lds.includes('dyslexia')){enableADHD();}
+}
+function completeSignup(){
+  if(!document.getElementById('gdprChk').checked){toast('Please accept the Privacy Policy to continue');return;}
+  state.name=document.getElementById('s1name').value||'Student';
+  document.getElementById('dname').textContent=state.name;
+  document.getElementById('dwelcome').textContent='Welcome back, '+state.name+' ✦';
+  // Apply learning profile
+  if(state.lds.includes('adhd')||state.lds.includes('dyslexia'))enableADHD();
+  // Update LP badges
+  const badges=document.getElementById('dlpbadges');
+  badges.innerHTML=state.lds.filter(l=>l!=='none').map(l=>`<span class="ldtag">${l.charAt(0).toUpperCase()+l.slice(1)}</span>`).join('');
+  updateSettingsLD();
+  toast('Welcome to Lumina AI, '+state.name+'! 🎉');
+  go('dashboard');
+}
+function showDash(){go('dashboard');}
+let ldtag='';
+function updateSettingsLD(){
+  const s=document.getElementById('ldSummary');
+  if(state.lds.length&&!state.lds.includes('none')){
+    s.innerHTML=`<p style="font-size:.8rem;color:var(--wd);margin-bottom:.5rem">Your learning profile:</p>`+state.lds.map(l=>`<span class="ldtag">${l.charAt(0).toUpperCase()+l.slice(1)}</span>`).join('');
+  }
+}
+
+// ═══════════════════════════════════════
+// ADHD TOGGLE
+// ═══════════════════════════════════════
+function enableADHD(){
+  state.adhdOn=true;
+  document.body.classList.add('adhd');
+  document.getElementById('adhdBtn').classList.add('on');
+  document.getElementById('adhdTog').classList.add('on');
+  document.getElementById('adhdNotice').classList.add('show');
+  document.getElementById('qadhdHint').classList.add('show');
+}
+function disableADHD(){
+  state.adhdOn=false;
+  document.body.classList.remove('adhd');
+  document.getElementById('adhdBtn').classList.remove('on');
+  document.getElementById('adhdTog').classList.remove('on');
+  document.getElementById('adhdNotice').classList.remove('show');
+  document.getElementById('qadhdHint').classList.remove('show');
+}
+function toggleADHD(){state.adhdOn?disableADHD():enableADHD();}
+function toggleTog(id,type){
+  const t=document.getElementById(id);
+  t.classList.toggle('on');
+  if(type==='adhd')t.classList.contains('on')?enableADHD():disableADHD();
+  toast(t.classList.contains('on')?'Setting enabled ✦':'Setting disabled');
+}
+
+// ═══════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════
+let notifOpen=false;
+function toggleNotif(){
+  notifOpen=!notifOpen;
+  document.getElementById('npanel').classList.toggle('show',notifOpen);
+  document.getElementById('fbmod').classList.remove('show');
+  document.getElementById('fontPanel').classList.remove('show');
+}
+function clearNotifs(){
+  document.querySelectorAll('.nunr').forEach(n=>n.classList.remove('nunr'));
+  document.getElementById('nbadge').textContent='0';
+  document.getElementById('nbadge').style.display='none';
+  toast('All notifications marked as read ✦');
+}
+
+// ═══════════════════════════════════════
+// FEEDBACK
+// ═══════════════════════════════════════
+let fbOpen=false;
+function toggleFB(){fbOpen=!fbOpen;document.getElementById('fbmod').classList.toggle('show',fbOpen);document.getElementById('npanel').classList.remove('show');}
+function rateStar(n){document.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<n));}
+function submitFB(){document.getElementById('fbmod').classList.remove('show');
+  document.getElementById('fontPanel').classList.remove('show');fbOpen=false;toast('Thank you for your feedback! ✦');}
+
+// ═══════════════════════════════════════
+// COOKIES
+// ═══════════════════════════════════════
+function acceptCookies(){document.getElementById('ckb').style.display='none';toast('Cookies accepted ✦');}
+function rejectCookies(){document.getElementById('ckb').style.display='none';}
+
+// ═══════════════════════════════════════
+// STREAK
+// ═══════════════════════════════════════
+function buildStreak(){
+  const g=document.getElementById('sgrid');
+  if(!g)return;
+  for(let i=0;i<28;i++){
+    const d=document.createElement('div');d.className='sd';
+    if(i===27)d.classList.add('td');
+    else if(i>=14)d.classList.add('done');
+    else if(Math.random()>.35)d.classList.add('done');
+    g.appendChild(d);
+  }
+}
+buildStreak();
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ═══════════════════════════════════════
+// ASSIGNMENTS
+// ═══════════════════════════════════════
+function switchMode(m,el){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('tview').style.display=m==='teacher'?'block':'none';
+  document.getElementById('sview').style.display=m==='student'?'block':'none';
+}
+function createAssign(){
+  const t=document.getElementById('atitle').value.trim();
+  if(!t){toast('Please add an assignment title');return;}
+  const s=document.getElementById('asubj').value;
+  const y=document.getElementById('ayear').value;
+  const b=document.getElementById('aboard').value;
+  const d=document.getElementById('adue').value;
+  const m=document.getElementById('amarks').value||'—';
+  const dstr=d?new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'No date';
+  const list=document.getElementById('alist');
+  const card=document.createElement('div');card.className='acard';
+  card.innerHTML=`<div class="ach"><div class="act"><h4>${t}</h4><p>${s} · ${y} · ${b}</p></div><span class="ast s-new">Active</span></div><div class="ameta"><span>📅 ${dstr}</span><span>✏️ ${m} marks</span></div><div class="afoot"><button class="btn btn-o" style="font-size:.76rem;padding:.42rem .85rem" onclick="toast('Opening submissions...')">Submissions</button><button class="btn btn-g" style="font-size:.76rem;padding:.42rem .85rem" onclick="aiMark()">AI Mark</button></div>`;
+  list.insertBefore(card,list.firstChild);
+  document.getElementById('atitle').value='';document.getElementById('ainstr').value='';document.getElementById('amarks').value='';
+  toast('Assignment "'+t+'" created and sent! ✦');
+}
+async function genAssignAI(){
+  const s=document.getElementById('asubj').value;
+  const y=document.getElementById('ayear').value;
+  const b=document.getElementById('aboard').value;
+  document.getElementById('atitle').value='⏳ Generating...';
+  document.getElementById('ainstr').value='Please wait...';
+  const prompt=`Create a homework assignment for ${y} ${s} students following the ${b} specification.\nProvide:\n1. A clear assignment title (one line)\n2. Detailed instructions (3-4 sentences, practical and exam-focused)\nJust give the title on the first line, then the instructions.`;
+  try{
+    const r=await callClaude([{role:'user',content:prompt}]);
+    const txt=r.content[0].text.trim();
+    const lines=txt.split('\n').filter(l=>l.trim());
+    document.getElementById('atitle').value=lines[0].replace(/^[#*\d.\-]+\s*/,'');
+    document.getElementById('ainstr').value=lines.slice(1).join('\n');
+    document.getElementById('amarks').value='20';
+    toast('Assignment generated by Claude AI ✦');
+  }catch(e){
+    document.getElementById('atitle').value=`${s} Homework — ${y}`;
+    document.getElementById('ainstr').value=`Complete the assigned ${s} questions covering key topics from your ${b} specification. Show all working clearly and check your answers.`;
+    toast('Using template — connect API for live generation');
+  }
+}
+function aiMark(){toast('AI marking all submissions... Results ready in 30 seconds ✦');}
+function startAssign(){toast('Opening assignment workspace... ✦');}
+async function getHint(){
+  const ans=document.getElementById('sanswer').value;
+  const box=document.getElementById('hintbox');
+  box.style.display='block';box.textContent='✦ Getting AI hint...';
+  const prompt=`A UK GCSE/A-Level student needs help with their assignment.${ans?` They have written: "${ans}"\n\nGive them a constructive hint to improve without giving away the full answer. Be encouraging and specific.`:`Give a helpful general hint on how to approach this type of assignment. Keep it brief and positive.`}`;
+  try{
+    const r=await callClaude([{role:'user',content:prompt}]);
+    box.textContent=r.content[0].text;
+  }catch(e){
+    box.textContent='Tip: Break the question into smaller parts. Identify what the examiner is asking for, what information you have, and which method applies.\n\nAlways show your working — method marks are available even if your final answer is wrong. Use key terminology from your subject.';
+  }
+}
+async function submitWork(){
+  const ans=document.getElementById('sanswer').value.trim();
+  if(!ans){toast('Please write your answer first');return;}
+  toast('Submitting for AI marking...');
+  setTimeout(()=>toast('✦ Submitted! AI feedback will appear shortly.'),1500);
+}
+function viewFeedback(){toast('AI Feedback: Strong source analysis. Consider adding more historical context for Source B. Score: 13/15 ✦');}
+
+// ═══════════════════════════════════════
+// QUESTION PAPERS
+// ═══════════════════════════════════════
+async function genPaper(){
+  const subj=document.getElementById('qs').value;
+  const board=document.getElementById('qb').value;
+  const level=document.getElementById('ql').value;
+  const num=document.getElementById('qnum').value;
+  const type=document.getElementById('qt').value;
+  const diff=document.getElementById('qd').value;
+  const focus=document.getElementById('qfocus').value;
+  const btn=document.getElementById('genBtn');
+  btn.disabled=true;btn.textContent='⏳ Claude AI is generating...';
+  document.getElementById('ptitle').textContent=`${board} ${level} ${subj} — Practice Paper`;
+  document.getElementById('pmeta').textContent=`${num} questions · ${type} · ${diff}${focus?' · '+focus:''}`;
+  const out=document.getElementById('qout');
+  const qc=document.getElementById('qcont');
+  qc.innerHTML=`<div class="gen-load"><div class="spin">⚙️</div><p style="margin-top:.9rem">Claude AI is generating your questions...</p></div>`;
+  out.classList.add('show');
+  out.scrollIntoView({behavior:'smooth',block:'start'});
+  const ldNote=state.lds.length&&!state.lds.includes('none')?`\nIMPORTANT: This student has ${state.lds.join(', ')}. Adapt questions accordingly: use clear simple language, break multi-part questions into numbered steps, avoid ambiguous phrasing.`:'';
+  const prompt=`Generate ${num} exam questions for ${board} ${level} ${subj}.\nQuestion type: ${type}\nTarget grade: ${diff}\n${focus?'Focus topics: '+focus:'Cover a range of core syllabus topics'}\n${ldNote}\n\nFormat EXACTLY like this for each question:\nQ[number]. [question text]\nMarks: [number]\n---\n\nMake questions realistic and curriculum-aligned. For calculations include given values. For essays specify expected structure.`;
+  try{
+    const r=await callClaude([{role:'user',content:prompt}]);
+    const txt=r.content[0].text;
+    const qs=txt.split('---').filter(q=>q.trim());
+    qc.innerHTML='';
+    qs.forEach((q,i)=>{
+      const lines=q.trim().split('\n').filter(l=>l.trim());
+      const ml=lines.find(l=>/^marks?:/i.test(l));
+      const marks=ml?ml.match(/\d+/)?.[0]||'4':'4';
+      const qtxt=lines.filter(l=>!/^marks?:/i.test(l)).join('\n').replace(/^Q\d+\.\s*/,'').trim();
+      if(!qtxt)return;
+      qc.innerHTML+=`<div class="qi"><div class="qn">Question ${i+1}</div><div class="qt">${qtxt}</div><div class="qm">Marks: <span>${marks} marks</span></div><div class="qans">Write your answer here...</div></div>`;
+    });
+    if(!qc.innerHTML)throw new Error('parse');
+  }catch(e){
+    qc.innerHTML=`<div class="qi"><div class="qn">Question 1</div><div class="qt">Solve the quadratic equation 3x² − 7x + 2 = 0. Show all working clearly.</div><div class="qm">Marks: <span>3 marks</span></div><div class="qans">Write your answer here...</div></div><div class="qi"><div class="qn">Question 2</div><div class="qt">A circle has equation x² + y² − 4x + 6y − 12 = 0. Find the centre and radius of the circle.</div><div class="qm">Marks: <span>4 marks</span></div><div class="qans">Write your answer here...</div></div><div class="qi"><div class="qn">Question 3</div><div class="qt">Prove algebraically that the product of two consecutive odd numbers is always one less than a multiple of 4.</div><div class="qm">Marks: <span>3 marks</span></div><div class="qans">Write your answer here...</div></div><p style="text-align:center;color:var(--wd);font-size:.8rem;padding:1.2rem">Connect your Claude API key in Vercel to generate live questions</p>`;
+  }
+  btn.disabled=false;btn.textContent='✦ Generate with Claude AI';
+}
+
+// ═══════════════════════════════════════
+// TUTOR
+// ═══════════════════════════════════════
+function selSubj(el,subj,label){
+  document.querySelectorAll('.slist li').forEach(l=>l.classList.remove('on'));
+  if(el.classList&&el.classList.add)el.classList.add('on');
+  state.currentSubj=subj;state.tutorHistory=[];
+  document.getElementById('tsubjlbl').textContent=label||subj;
+  appendMsg('tmsgs','ai',`Switched to ${subj}. What would you like to work on? I can explain a concept, work through a problem step-by-step, or create a practice question.`);
+}
+function qa(q){document.getElementById('tin').value=q;tsend();}
+async function tsend(){
+  const inp=document.getElementById('tin');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';
+  const btn=document.getElementById('tsendBtn');
+  btn.disabled=true;inp.disabled=true;
+  appendMsg('tmsgs','usr',msg);
+  state.tutorHistory.push({role:'user',content:msg});
+  const typing=appendMsg('tmsgs','ai','✦ Thinking...');
+  const ldContext=state.lds.length&&!state.lds.includes('none')?`The student has: ${state.lds.join(', ')}. Adapt your explanation accordingly — use clear simple language, break explanations into numbered steps, avoid jargon.`:'';
+  const sys=`You are Lumina AI, an expert UK exam tutor specialising in ${state.currentSubj} for GCSE and A-Level students. Rules: always explain step by step and clearly; reference UK exam boards (AQA, Edexcel, OCR) where relevant; use UK English spelling; be encouraging and warm; for maths show full working; keep responses focused and not too long; when asked for practice questions format them exam-style with mark allocation. ${ldContext}`;
+  try{
+    const r=await callClaude(state.tutorHistory,sys);
+    const reply=r.content[0].text;
+    state.tutorHistory.push({role:'assistant',content:reply});
+    typing.textContent=reply;
+  }catch(e){
+    typing.textContent=`I'm ready to help with ${state.currentSubj}! Ask me to explain a concept, work through a problem, or create a practice question.\n\n(Connect your Claude API key in Vercel for full AI responses.)`;
+  }
+  btn.disabled=false;inp.disabled=false;inp.focus();
+}
+
+// DASHBOARD CHAT
+async function dsend(){
+  const inp=document.getElementById('dchin');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';
+  const btn=document.getElementById('dsendBtn');
+  btn.disabled=true;inp.disabled=true;
+  appendMsg('dmsgs','usr',msg);
+  state.dashHistory.push({role:'user',content:msg});
+  const typing=appendMsg('dmsgs','ai','✦ Thinking...');
+  const sys=`You are Lumina AI, a friendly and expert UK exam tutor. Help the student with any subject question. Be clear, encouraging, and concise.`;
+  try{
+    const r=await callClaude(state.dashHistory,sys);
+    const reply=r.content[0].text;
+    state.dashHistory.push({role:'assistant',content:reply});
+    typing.textContent=reply;
+  }catch(e){
+    typing.textContent='I\'m your Lumina AI tutor! Ask me anything about any subject — I\'m here to help. (Connect your API key in Vercel for live responses.)';
+  }
+  btn.disabled=false;inp.disabled=false;inp.focus();
+}
+
+function appendMsg(boxId,role,text){
+  const box=document.getElementById(boxId);
+  const div=document.createElement('div');
+  div.className='msg '+role;div.textContent=text;
+  box.appendChild(div);box.scrollTop=box.scrollHeight;
+  return div;
+}
+
+// ═══════════════════════════════════════
+// STRENGTHS ANALYSIS
+// ═══════════════════════════════════════
+async function runAnalysis(){
+  const btn=document.getElementById('analyzeBtn');
+  btn.textContent='🤖 Analysing...';btn.disabled=true;
+  const ldNote=state.lds.length&&!state.lds.includes('none')?`\nNote: this student has ${state.lds.join(', ')} — tailor recommendations accordingly.`:'';
+  const prompt=`You are an expert UK exam tutor analysing a student's performance data.\n\nStrengths: Algebra (94%), Historical Analysis (91%), Quadratics (89%), Supply & Demand (86%)\nWeaknesses: 3D Trigonometry (34%), Electricity Circuits (41%), Hypothesis Testing (45%), Organic Chemistry (48%)${ldNote}\n\nGenerate exactly 4 specific, actionable recommendations numbered 1-4. Each should say what to study and how. Be encouraging and practical. One line per recommendation.`;
+  try{
+    const r=await callClaude([{role:'user',content:prompt}]);
+    const txt=r.content[0].text;
+    const items=txt.split('\n').filter(l=>l.trim()&&/^\d/.test(l.trim()));
+    const prios=[['ph2','!'],['ph2','!'],['pm2','~'],['pl2','✓']];
+    if(items.length){
+      document.getElementById('recsout').innerHTML=items.map((item,i)=>{
+        const [cls,ico]=prios[i]||['pl2','✓'];
+        return `<div class="reci"><div class="prd ${cls}">${ico}</div><div class="reb"><p>${item.replace(/^\d+\.\s*/,'')}</p></div></div>`;
+      }).join('');
+      toast('AI analysis complete ✦');
+    }
+  }catch(e){toast('Connect your Claude API key for live AI analysis');}
+  btn.textContent='🎯 Re-run AI Analysis';btn.disabled=false;
+}
+
+// ═══════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════
+function confirmDelete(){
+  if(confirm('Are you sure you want to permanently delete your account? This cannot be undone.')){
+    toast('Account deletion request submitted. You will receive a confirmation email.');
+  }
+}
+
+// ═══════════════════════════════════════
+// CLAUDE API
+// ═══════════════════════════════════════
+async function callClaude(messages,system){
+  const body={model:'claude-haiku-4-5-20251001',max_tokens:1024,messages};
+  if(system)body.system=system;
+  const r=await fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok)throw new Error('API error '+r.status);
+  return r.json();
+}
+
+// ═══════════════════════════════════
+// DYSLEXIA FONT SYSTEM
+// ═══════════════════════════════════
+let currentFont=null;
+const fontFamilies={
+  opendyslexic:"'OpenDyslexic',sans-serif",
+  lexend:"'Lexend',sans-serif",
+  atkinson:"'Atkinson Hyperlegible',sans-serif",
+  comic:"'Comic Sans MS','Comic Sans',cursive"
+};
+function toggleFontPanel(){
+  const p=document.getElementById('fontPanel');
+  p.classList.toggle('show');
+  document.getElementById('npanel').classList.remove('show');
+  document.getElementById('fbmod').classList.remove('show');
+  document.getElementById('fontPanel').classList.remove('show');
+}
+function closeFontPanel(){document.getElementById('fontPanel').classList.remove('show');}
+function setFont(f){
+  // Remove all font classes
+  ['opendyslexic','lexend','atkinson','comic'].forEach(fn=>{
+    document.body.classList.remove('font-'+fn);
+    document.getElementById('fo-'+fn)?.classList.remove('on');
+  });
+  if(currentFont===f){currentFont=null;updatePreview(null);return;}
+  currentFont=f;
+  document.body.classList.add('font-'+f);
+  document.getElementById('fo-'+f).classList.add('on');
+  updatePreview(f);
+  toast('Font switched to '+f.charAt(0).toUpperCase()+f.slice(1)+' ✦');
+}
+function resetFont(){
+  ['opendyslexic','lexend','atkinson','comic'].forEach(fn=>{
+    document.body.classList.remove('font-'+fn);
+    document.getElementById('fo-'+fn)?.classList.remove('on');
+  });
+  currentFont=null;
+  updatePreview(null);
+  toast('Font reset to default ✦');
+}
+function updatePreview(f){
+  const el=document.getElementById('fpPreviewText');
+  if(f&&fontFamilies[f]){
+    el.style.fontFamily=fontFamilies[f];
+    el.style.lineHeight='1.9';
+    el.style.letterSpacing='.04em';
+  }else{
+    el.style.fontFamily='';el.style.lineHeight='';el.style.letterSpacing='';
+  }
+}
+
+</script>
+</body>
+</html>
