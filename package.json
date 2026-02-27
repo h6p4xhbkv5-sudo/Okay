@@ -1,9 +1,6 @@
 {
   "name": "lumina-ai",
-  "version": "1.0.0",
+  "version": "6.0.0",
   "type": "module",
-  "engines": {
-    "node": "24.x"
-  }
+  "engines": { "node": "18.x" }
 }
-
