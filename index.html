@@ -3,11 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumina AI — The Smartest Way to Learn</title>
+<title>Synaptiq — A-Level Maths AI Tutor | Master Your Exams</title>
+<meta name="description" content="Synaptiq is the UK's most focused A-Level Maths AI tutor. Get step-by-step explanations, past paper practice, and mark-scheme-aligned answers. Start free.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Synaptiq — A-Level Maths AI Tutor">
+<meta property="og:description" content="Master A-Level Maths with AI. Step-by-step working, past paper practice, and personalised revision. Free 7-day trial.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono&family=Lexend:wght@300;400;600&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXX');</script>
+<!-- JSON-LD Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Synaptiq",
+  "description": "AI-powered A-Level Mathematics tutoring platform for UK students",
+  "url": "https://synaptiq.co.uk",
+  "offers": [
+    {
+      "@type": "Course",
+      "name": "A-Level Mathematics — Pure 1 & 2",
+      "description": "Complete A-Level Pure Mathematics curriculum with AI tutoring",
+      "educationalLevel": "A-Level"
+    },
+    {
+      "@type": "Course",
+      "name": "A-Level Mathematics — Statistics & Mechanics",
+      "description": "A-Level Statistics and Mechanics with AI tutoring",
+      "educationalLevel": "A-Level"
+    }
+  ]
+}
+</script>
 <style>
 /* ═══════════════════════════════════════
    CSS VARIABLES & RESET
@@ -1091,6 +1126,208 @@ body.mode-adhd .adhd-break { display: block; }
 .gap { gap: .75rem; }
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
+
+/* ═══════════════════════════════════════
+   EXIT-INTENT POPUP
+═══════════════════════════════════════ */
+#exit-popup {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(7,8,12,0.85); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+#exit-popup.show { display: flex; }
+.exit-popup-box {
+  background: var(--bg2); border: 1px solid var(--gold);
+  border-radius: 24px; padding: 3rem; max-width: 480px; width: 90%;
+  text-align: center; box-shadow: var(--shadow), var(--glow);
+  animation: fadeUp .4s ease;
+  position: relative;
+}
+.exit-popup-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 1.4rem; cursor: pointer;
+}
+.exit-popup-box h2 { font-family: var(--font-head); font-size: 1.8rem; margin-bottom: .75rem; }
+.exit-popup-box p { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+
+/* ═══════════════════════════════════════
+   ONBOARDING MODAL
+═══════════════════════════════════════ */
+#onboarding-modal {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(7,8,12,0.85); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+#onboarding-modal.show { display: flex; }
+.onboarding-box {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 24px; padding: 2.5rem; max-width: 520px; width: 90%;
+  box-shadow: var(--shadow); animation: fadeUp .4s ease;
+}
+.onboarding-box h2 { font-family: var(--font-head); font-size: 1.6rem; margin-bottom: .5rem; }
+.onboarding-box .sub { color: var(--muted); margin-bottom: 2rem; }
+.onboarding-tips { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+.onboarding-tip {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: var(--bg3); border-radius: 12px; padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+}
+.onboarding-tip .tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+.onboarding-tip h4 { font-size: .9rem; font-weight: 700; margin-bottom: .25rem; }
+.onboarding-tip p { font-size: .8rem; color: var(--muted); }
+
+/* ═══════════════════════════════════════
+   A-LEVEL CONTENT PAGE
+═══════════════════════════════════════ */
+.content-tabs {
+  display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2rem;
+}
+.content-tab {
+  padding: .6rem 1.25rem; border-radius: 8px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); font-weight: 600; cursor: pointer; transition: all .2s;
+  font-size: .875rem;
+}
+.content-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.content-panel { display: none; }
+.content-panel.active { display: block; }
+.content-section-header {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem 1.25rem;
+  margin-bottom: .5rem; cursor: pointer; transition: all .2s;
+}
+.content-section-header:hover { border-color: rgba(201,168,76,0.3); }
+.content-section-header h4 { font-weight: 700; font-size: .95rem; flex: 1; }
+.content-section-icon { font-size: 1.2rem; }
+.content-section-arrow { color: var(--muted); transition: transform .3s; }
+.content-section-header.open .content-section-arrow { transform: rotate(90deg); }
+.content-section-body { display: none; padding: .5rem 0 1rem; }
+.content-section-body.open { display: block; }
+.chapter-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
+.chapter-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all .2s;
+}
+.chapter-item:hover { border-color: rgba(201,168,76,0.3); }
+.chapter-item-left { display: flex; align-items: center; gap: .75rem; }
+.chapter-num-badge {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(201,168,76,0.1); color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 800; flex-shrink: 0;
+}
+.chapter-name { font-size: .875rem; font-weight: 600; }
+.chapter-study-btn {
+  padding: .35rem .75rem; border-radius: 6px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--muted); font-size: .75rem; cursor: pointer;
+  transition: all .2s; white-space: nowrap;
+}
+.chapter-study-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.stats-sub-label {
+  font-size: .7rem; color: var(--gold); text-transform: uppercase;
+  letter-spacing: .08em; font-weight: 700; margin-bottom: .5rem;
+  padding: .25rem .75rem; background: rgba(201,168,76,0.1);
+  border-radius: 4px; display: inline-block;
+}
+
+/* ═══════════════════════════════════════
+   RESOURCES / UPLOAD PAGE
+═══════════════════════════════════════ */
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 16px;
+  padding: 3rem 2rem; text-align: center; cursor: pointer;
+  transition: all .3s; background: var(--bg2);
+  margin-bottom: 1.5rem;
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--gold); background: rgba(201,168,76,0.04);
+}
+.upload-zone .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+.upload-zone h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
+.upload-zone p { color: var(--muted); font-size: .875rem; }
+.upload-form {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+  display: none;
+}
+.upload-form.show { display: block; }
+.resources-list { display: flex; flex-direction: column; gap: .75rem; }
+.resource-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  display: flex; align-items: center; gap: 1rem;
+  transition: all .2s;
+}
+.resource-item:hover { border-color: rgba(201,168,76,0.2); }
+.resource-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.resource-icon.mark-scheme { background: rgba(74,222,128,0.1); }
+.resource-icon.past-paper { background: rgba(96,165,250,0.1); }
+.resource-info { flex: 1; }
+.resource-name { font-weight: 600; font-size: .875rem; }
+.resource-meta { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
+.resource-badge {
+  padding: .2rem .6rem; border-radius: 20px;
+  font-size: .7rem; font-weight: 700;
+}
+.resource-badge.ms { background: rgba(74,222,128,0.15); color: var(--green); }
+.resource-badge.pp { background: rgba(96,165,250,0.15); color: var(--blue); }
+.resource-delete {
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: 1rem; padding: .25rem;
+  transition: color .2s;
+}
+.resource-delete:hover { color: var(--red); }
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+.testimonials-section {
+  position: relative; z-index: 1; padding: 5rem 2rem;
+}
+.testimonials-section h2 {
+  font-family: var(--font-head); font-size: clamp(1.8rem,4vw,3rem);
+  text-align: center; margin-bottom: 3rem;
+}
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem; max-width: 1000px; margin: 0 auto;
+}
+.testimonial-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.75rem;
+  transition: all .3s;
+}
+.testimonial-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
+.testimonial-stars { color: var(--gold); margin-bottom: .75rem; font-size: .9rem; }
+.testimonial-text { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: .75rem; }
+.testimonial-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--black); font-size: .875rem;
+}
+.testimonial-name { font-weight: 700; font-size: .875rem; }
+.testimonial-detail { font-size: .75rem; color: var(--muted); }
+
+/* Progress bar for auth steps */
+.auth-progress {
+  height: 3px; background: var(--bg4); border-radius: 2px;
+  margin-bottom: 2rem; overflow: hidden;
+}
+.auth-progress-fill {
+  height: 100%; background: var(--gold); border-radius: 2px;
+  transition: width .4s ease;
+}
 </style>
 </head>
 <body>
@@ -1104,7 +1341,7 @@ body.mode-adhd .adhd-break { display: block; }
 
 <!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
 <nav id="nav">
-  <div class="nav-logo" onclick="nav('home')">Lumina <span>AI</span></div>
+  <div class="nav-logo" onclick="nav('home')">Synapti<span>q</span></div>
   <div class="nav-links" id="public-nav">
     <a onclick="nav('home')">Home</a>
     <a onclick="scrollTo('#features')">Features</a>
@@ -1113,10 +1350,10 @@ body.mode-adhd .adhd-break { display: block; }
   <div class="nav-links" id="app-nav" style="display:none">
     <a onclick="showDash('home')" id="nl-home">Dashboard</a>
     <a onclick="showDash('tutor')" id="nl-tutor">AI Tutor</a>
+    <a onclick="showDash('content')" id="nl-content">A-Level Content</a>
     <a onclick="showDash('questions')" id="nl-questions">Questions</a>
+    <a onclick="showDash('resources')" id="nl-resources">Resources</a>
     <a onclick="showDash('progress')" id="nl-progress">Progress</a>
-    <a onclick="showDash('strengths')" id="nl-strengths">Strengths</a>
-    <a onclick="showDash('assignments')" id="nl-assign">Assignments</a>
     <a onclick="showDash('settings')" id="nl-settings">Settings</a>
   </div>
   <div class="nav-right">
@@ -1141,17 +1378,17 @@ body.mode-adhd .adhd-break { display: block; }
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-badge"><i class="fas fa-sparkles"></i> UK GCSE & A-Level Learning Platform</div>
-    <h1>The <em>Smartest Way</em><br>to Prepare for Your Exams</h1>
-    <p>AI-powered tutoring, personalised question papers, teacher assignments, and real-time progress tracking — built for every learner, including ADHD, dyslexia, and other learning differences.</p>
+    <div class="hero-badge"><i class="fas fa-square-root-alt"></i> A-Level Mathematics · AQA · Edexcel · OCR</div>
+    <h1>Master <em>A-Level Maths</em><br>with AI</h1>
+    <p>Step-by-step working, mark-scheme-aligned answers, and a complete A-Level content library — Pure 1 & 2, Statistics and Mechanics. Built for Year 12 & 13 students.</p>
     <div class="hero-actions">
-      <button class="btn-hero-primary" onclick="nav('auth')">Start Learning Free →</button>
-      <button class="btn-hero-secondary" onclick="document.querySelector('.video-section').scrollIntoView({behavior:'smooth'})">▶ Watch How It Works</button>
+      <button class="btn-hero-primary" onclick="nav('auth');trackEvent('cta_clicked',{location:'hero'})">Start Free Trial →</button>
+      <button class="btn-hero-secondary" onclick="document.querySelector('.video-section').scrollIntoView({behavior:'smooth'})">▶ See How It Works</button>
     </div>
     <div class="trust-bar">
-      <div class="trust-item"><i class="fas fa-credit-card"></i> No credit card required</div>
-      <div class="trust-item"><i class="fas fa-graduation-cap"></i> All UK exam boards</div>
-      <div class="trust-item"><i class="fas fa-brain"></i> ADHD & dyslexia friendly</div>
+      <div class="trust-item"><i class="fas fa-credit-card"></i> 7-day free trial</div>
+      <div class="trust-item"><i class="fas fa-graduation-cap"></i> AQA, Edexcel & OCR</div>
+      <div class="trust-item"><i class="fas fa-file-alt"></i> Past paper aligned</div>
       <div class="trust-item"><i class="fas fa-shield-alt"></i> GDPR compliant</div>
     </div>
   </section>
@@ -1159,14 +1396,14 @@ body.mode-adhd .adhd-break { display: block; }
   <!-- Video Section -->
   <section class="video-section">
     <div class="section-label">See it in action</div>
-    <h2>Watch How Lumina AI Works</h2>
-    <p>A 90-second walkthrough showing how students use the AI tutor, generate exam questions, and track their progress.</p>
+    <h2>Watch How Synaptiq Works</h2>
+    <p>A 90-second walkthrough showing how A-Level Maths students use the AI tutor, practise past papers, and navigate the full curriculum.</p>
     <div class="video-player">
       <div class="video-main" id="video-main" onclick="startVideo()">
         <div class="video-preview-content">
           <div class="video-play-btn"><i class="fas fa-play"></i></div>
-          <h3>How Lumina AI Works</h3>
-          <p>AI Tutor · Exam Questions · Progress Tracking · Accessibility</p>
+          <h3>How Synaptiq Works</h3>
+          <p>AI Tutor · A-Level Content · Past Papers · Mark Schemes</p>
         </div>
       </div>
       <div class="video-chapters">
@@ -1192,44 +1429,44 @@ body.mode-adhd .adhd-break { display: block; }
   <!-- Features -->
   <section class="features-section" id="features">
     <div class="section-label" style="display:block;text-align:center;margin-bottom:1rem">What's inside</div>
-    <h2>Everything a student needs to succeed</h2>
-    <p class="sub">From AI tutoring to exam prep — Lumina adapts to how YOU learn best.</p>
+    <h2>Everything you need to ace A-Level Maths</h2>
+    <p class="sub">From Pure 1 to Mechanics — Synaptiq covers every topic, every exam board, every mark scheme.</p>
     <div class="features-grid">
       <div class="feature-card" onclick="nav('auth')">
         <div class="feature-icon">🤖</div>
-        <h3>AI Tutor (Powered by Claude Opus)</h3>
-        <p>Ask anything. Get step-by-step explanations tailored to your level, learning style, and exam board. Remembers what you've covered.</p>
-        <span class="feature-tag">9 Subjects</span>
+        <h3>A-Level Maths AI Tutor</h3>
+        <p>Ask anything. Get full working shown step by step — exactly how a mark scheme expects it. Covers Pure, Stats and Mechanics.</p>
+        <span class="feature-tag">Claude Opus</span>
+      </div>
+      <div class="feature-card" onclick="nav('auth')">
+        <div class="feature-icon">📚</div>
+        <h3>Complete Content Library</h3>
+        <p>Every chapter organised by module — Pure 1, Pure 2, Statistics Year 1 & 2, Mechanics Year 1 & 2. Click any chapter to study with AI.</p>
+        <span class="feature-tag">All Chapters</span>
+      </div>
+      <div class="feature-card" onclick="nav('auth')">
+        <div class="feature-icon">📄</div>
+        <h3>Upload Mark Schemes & Past Papers</h3>
+        <p>Upload your exam board's mark scheme. The AI reads it and gives answers aligned to exactly how your board awards marks.</p>
+        <span class="feature-tag">AQA · Edexcel · OCR</span>
       </div>
       <div class="feature-card" onclick="nav('auth')">
         <div class="feature-icon">📝</div>
-        <h3>Exam Question Generator</h3>
-        <p>Generate real exam-style questions for any topic, mark scheme, difficulty and exam board. Get instant AI feedback on your answers.</p>
-        <span class="feature-tag">All Exam Boards</span>
+        <h3>A-Level Question Generator</h3>
+        <p>Generate exam-style A-Level Maths questions for any topic, difficulty, and exam board. Full working and hints included.</p>
+        <span class="feature-tag">Exam-Style</span>
       </div>
       <div class="feature-card" onclick="nav('auth')">
         <div class="feature-icon">🎯</div>
-        <h3>Strengths & Weaknesses Analyser</h3>
-        <p>Claude analyses your performance and tells you exactly what to focus on. Get a personalised revision priority list.</p>
+        <h3>Topic Strength Analysis</h3>
+        <p>Claude identifies your weak spots across A-Level topics and builds you a personalised revision priority list.</p>
         <span class="feature-tag">AI Analysis</span>
       </div>
       <div class="feature-card" onclick="nav('auth')">
-        <div class="feature-icon">📊</div>
-        <h3>Progress Tracking</h3>
-        <p>See your improvement over time with beautiful charts, study streaks, achievement badges and topic mastery scores.</p>
-        <span class="feature-tag">Real-time</span>
-      </div>
-      <div class="feature-card" onclick="nav('auth')">
         <div class="feature-icon">🧮</div>
-        <h3>Dyscalculia Calculator & Visual Maths</h3>
-        <p>A dedicated number-line calculator that shows how maths works visually — step by step, with colour-coded operations.</p>
+        <h3>Visual Maths & Dyscalculia Support</h3>
+        <p>Visual number lines, colour-coded working, step-by-step breakdowns. Full accessibility for ADHD and dyslexia too.</p>
         <span class="feature-tag">Accessibility</span>
-      </div>
-      <div class="feature-card" onclick="nav('auth')">
-        <div class="feature-icon">👨‍🏫</div>
-        <h3>Teacher Assignments</h3>
-        <p>Teachers set AI-powered homework. Students get AI hints. Teachers see real-time submission tracking with auto-grading.</p>
-        <span class="feature-tag">For Schools</span>
       </div>
     </div>
   </section>
@@ -1237,96 +1474,124 @@ body.mode-adhd .adhd-break { display: block; }
   <!-- Stats -->
   <section class="stats-section">
     <div class="stats-grid">
-      <div><div class="stat-num">12,000+</div><div class="stat-label">Students Learning</div></div>
-      <div><div class="stat-num">98%</div><div class="stat-label">Satisfaction Rate</div></div>
-      <div><div class="stat-num">1M+</div><div class="stat-label">Questions Generated</div></div>
-      <div><div class="stat-num">+42%</div><div class="stat-label">Average Grade Boost</div></div>
+      <div><div class="stat-num">2,400+</div><div class="stat-label">A-Level Maths Students</div></div>
+      <div><div class="stat-num">97%</div><div class="stat-label">Would Recommend Synaptiq</div></div>
+      <div><div class="stat-num">180+</div><div class="stat-label">A-Level Topics Covered</div></div>
+      <div><div class="stat-num">+2 grades</div><div class="stat-label">Average Improvement</div></div>
     </div>
   </section>
 
-  <!-- Subjects -->
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <h2>What students say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I went from a D to a B in Pure Maths in 6 weeks. The AI shows full working exactly like the mark scheme — I finally understand why I was losing marks."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">E</div>
+          <div><div class="testimonial-name">Emily R.</div><div class="testimonial-detail">Year 13 · AQA Maths</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Uploading the mark scheme changed everything. Now when I ask about a question, it explains it the exact way Edexcel wants it answered. Genuinely brilliant."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">J</div>
+          <div><div class="testimonial-name">Jake T.</div><div class="testimonial-detail">Year 12 · Edexcel Maths</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The chapter navigator is perfect for revision. I can jump straight to Trigonometry or Integration and have the AI walk me through every concept. Best £60 I've spent."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div><div class="testimonial-name">Aisha M.</div><div class="testimonial-detail">Year 13 · OCR Maths</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules overview -->
   <section class="subjects-section">
-    <h2>All the subjects you need</h2>
-    <div class="subjects-grid">
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">➕</div><div class="s-name">Mathematics</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">⚡</div><div class="s-name">Physics</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🧪</div><div class="s-name">Chemistry</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🧬</div><div class="s-name">Biology</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📖</div><div class="s-name">English Lit</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🏛️</div><div class="s-name">History</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">💻</div><div class="s-name">Computer Sci</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">💰</div><div class="s-name">Economics</div><div class="s-level">A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🇫🇷</div><div class="s-name">French</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🌍</div><div class="s-name">Geography</div><div class="s-level">GCSE / A-Level</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🎨</div><div class="s-name">Art & Design</div><div class="s-level">GCSE</div></div>
-      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📐</div><div class="s-name">Further Maths</div><div class="s-level">A-Level</div></div>
+    <h2>Everything in A-Level Maths, organised</h2>
+    <div class="subjects-grid" style="max-width:800px">
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📘</div><div class="s-name">Pure 1</div><div class="s-level">Year 12</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📗</div><div class="s-name">Pure 2</div><div class="s-level">Year 13</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📊</div><div class="s-name">Statistics Y1</div><div class="s-level">Year 12</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📈</div><div class="s-name">Statistics Y2</div><div class="s-level">Year 13</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">⚙️</div><div class="s-name">Mechanics Y1</div><div class="s-level">Year 12</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">🔧</div><div class="s-name">Mechanics Y2</div><div class="s-level">Year 13</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">📄</div><div class="s-name">Past Papers</div><div class="s-level">All Boards</div></div>
+      <div class="subject-pill" onclick="nav('auth')"><div class="s-icon">✅</div><div class="s-name">Mark Schemes</div><div class="s-level">AI Aligned</div></div>
     </div>
   </section>
 
   <!-- Pricing -->
-  <section class="pricing-section" id="pricing">
+  <section class="pricing-section" id="pricing" onclick="trackEvent('pricing_viewed',{})">
     <h2>Simple, transparent pricing</h2>
-    <p class="pricing-sub">No hidden fees. Cancel any time. Start with a 7-day free trial.</p>
+    <p class="pricing-sub">No hidden fees. Cancel any time. Start with a 7-day free trial — no card needed.</p>
     <div class="pricing-grid">
       <div class="price-card">
         <div class="price-name">Student Plan</div>
         <div class="price-amount">£60<span>/month</span></div>
-        <div class="price-desc">Perfect for individual GCSE & A-Level students</div>
+        <div class="price-desc">Perfect for A-Level Maths students in Year 12 or 13</div>
         <ul class="price-features">
-          <li><i class="fas fa-check"></i>Full AI Tutor (Claude Opus)</li>
+          <li><i class="fas fa-check"></i>Full AI Maths Tutor (Claude Opus)</li>
+          <li><i class="fas fa-check"></i>Complete A-Level content library</li>
+          <li><i class="fas fa-check"></i>Upload mark schemes & past papers</li>
           <li><i class="fas fa-check"></i>Unlimited practice questions</li>
-          <li><i class="fas fa-check"></i>Personalised explanations</li>
-          <li><i class="fas fa-check"></i>Exam preparation tools</li>
-          <li><i class="fas fa-check"></i>Progress tracking</li>
+          <li><i class="fas fa-check"></i>Step-by-step working</li>
           <li><i class="fas fa-check"></i>All accessibility features</li>
         </ul>
-        <button class="btn-full" onclick="nav('auth')">Get Started</button>
+        <button class="btn-full" onclick="nav('auth');trackEvent('cta_clicked',{plan:'student',location:'pricing'})">Start Free Trial</button>
       </div>
       <div class="price-card featured">
         <div class="price-name">Homeschool Plan</div>
         <div class="price-amount">£200<span>/month</span></div>
-        <div class="price-desc">Complete AI tutoring system for homeschool families</div>
+        <div class="price-desc">Full A-Level Maths support for homeschool families</div>
         <ul class="price-features">
           <li><i class="fas fa-check"></i>Everything in Student Plan</li>
-          <li><i class="fas fa-check"></i>Full curriculum support</li>
-          <li><i class="fas fa-check"></i>Teacher assignment tools</li>
-          <li><i class="fas fa-check"></i>Parent progress dashboard</li>
           <li><i class="fas fa-check"></i>Multiple student profiles</li>
+          <li><i class="fas fa-check"></i>Parent progress dashboard</li>
+          <li><i class="fas fa-check"></i>Teacher assignment creation</li>
+          <li><i class="fas fa-check"></i>Shared resource library</li>
           <li><i class="fas fa-check"></i>Priority support</li>
         </ul>
-        <button class="btn-full" onclick="nav('auth')">Get Started</button>
+        <button class="btn-full" onclick="nav('auth');trackEvent('cta_clicked',{plan:'homeschool',location:'pricing'})">Start Free Trial</button>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="cta-section">
-    <h2>Ready to transform<br><em style="color:var(--gold);font-style:normal">how you learn?</em></h2>
-    <p>Join thousands of UK students achieving better grades with AI-powered tutoring.</p>
-    <button class="btn-hero-primary" onclick="nav('auth')">Start Your Free Trial →</button>
+    <h2>Ready to master<br><em style="color:var(--gold);font-style:normal">A-Level Maths?</em></h2>
+    <p>Join 2,400+ UK A-Level students getting better marks with AI-powered, mark-scheme-aligned tutoring.</p>
+    <button class="btn-hero-primary" onclick="nav('auth');trackEvent('cta_clicked',{location:'footer_cta'})">Start Your Free Trial →</button>
   </section>
 
   <!-- Footer -->
   <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:2rem;text-align:center;">
-    <div class="nav-logo" style="margin-bottom:.5rem">Lumina <span style="color:var(--gold)">AI</span></div>
-    <p style="color:var(--muted);font-size:.8rem;margin-bottom:1rem">The smartest way to prepare for your exams</p>
+    <div class="nav-logo" style="margin-bottom:.5rem">Synapti<span style="color:var(--gold)">q</span></div>
+    <p style="color:var(--muted);font-size:.8rem;margin-bottom:1rem">A-Level Maths AI Tutor · AQA · Edexcel · OCR</p>
     <div style="display:flex;gap:1.5rem;justify-content:center;font-size:.8rem;">
       <a onclick="nav('privacy')" style="color:var(--muted);cursor:pointer;text-decoration:none">Privacy Policy</a>
       <a style="color:var(--muted);cursor:pointer;text-decoration:none">Terms of Service</a>
       <a style="color:var(--muted);cursor:pointer;text-decoration:none">Contact</a>
     </div>
-    <p style="color:var(--muted);font-size:.75rem;margin-top:1rem">© 2025 Lumina AI. All rights reserved.</p>
+    <p style="color:var(--muted);font-size:.75rem;margin-top:1rem">© 2025 Synaptiq. All rights reserved.</p>
   </footer>
 </div>
 
 <!-- ═══════════════════════ AUTH PAGE ═══════════════════════ -->
 <div id="page-auth" class="page">
   <div class="auth-box">
-    <div class="auth-logo">Lumina <span>AI</span></div>
-    <p class="auth-sub">Join thousands of UK students achieving better grades</p>
+    <div class="auth-logo">Synapti<span>q</span></div>
+    <p class="auth-sub">Join 2,400+ A-Level Maths students achieving better grades</p>
 
     <!-- Signup flow -->
     <div id="signup-flow">
+      <div class="auth-progress"><div class="auth-progress-fill" id="auth-progress-fill" style="width:25%"></div></div>
       <div class="step-indicator">
         <div class="step-dot active" id="dot1"></div>
         <div class="step-dot" id="dot2"></div>
@@ -1357,34 +1622,32 @@ body.mode-adhd .adhd-break { display: block; }
 
       <!-- Step 2: Profile -->
       <div class="auth-step" id="step2">
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:1.5rem">Tell us about yourself</h3>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:1.5rem">Your A-Level Maths profile</h3>
         <div class="form-group">
           <label>I am a...</label>
           <select id="reg-role">
             <option>Student</option>
-            <option>Teacher</option>
             <option>Parent / Guardian</option>
+            <option>Teacher</option>
           </select>
         </div>
         <div class="form-group">
           <label>Year Group</label>
           <select id="reg-year">
-            <option>Year 9</option><option>Year 10</option><option selected>Year 11 (GCSE)</option>
-            <option>Year 12 (AS)</option><option>Year 13 (A-Level)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Primary Subject</label>
-          <select id="reg-subject">
-            <option>Mathematics</option><option>Physics</option><option>Chemistry</option>
-            <option>Biology</option><option>English Literature</option><option>History</option>
-            <option>Computer Science</option><option>Economics</option><option>French</option>
+            <option selected>Year 12 (AS Level)</option>
+            <option>Year 13 (A-Level)</option>
           </select>
         </div>
         <div class="form-group">
           <label>Exam Board</label>
           <select id="reg-board">
             <option>AQA</option><option>Edexcel</option><option>OCR</option><option>WJEC</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Target Grade</label>
+          <select id="reg-target">
+            <option>A*</option><option>A</option><option selected>B</option><option>C</option>
           </select>
         </div>
         <button class="btn-full" onclick="nextStep(2)">Continue →</button>
@@ -1394,7 +1657,7 @@ body.mode-adhd .adhd-break { display: block; }
       <!-- Step 3: Learning needs -->
       <div class="auth-step" id="step3">
         <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem">How do you learn best?</h3>
-        <p style="color:var(--muted);font-size:.8rem;margin-bottom:1.5rem">Select any that apply — Lumina will adapt to you automatically</p>
+        <p style="color:var(--muted);font-size:.8rem;margin-bottom:1.5rem">Select any that apply — Synaptiq will adapt to you automatically</p>
         <div class="difficulty-grid">
           <div class="diff-card" id="diff-adhd" onclick="toggleDiff('adhd')">
             <div class="diff-icon">⚡</div>
