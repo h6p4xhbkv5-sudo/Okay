@@ -1769,7 +1769,7 @@ body.mode-adhd .adhd-break { display: block; }
       <div class="stats-row">
         <div class="stat-card"><div class="stat-card-label">Questions Answered</div><div class="stat-card-value" id="stat-q">0</div><div class="stat-card-change">↑ Start today!</div></div>
         <div class="stat-card"><div class="stat-card-label">Accuracy Rate</div><div class="stat-card-value" id="stat-acc">—</div><div class="stat-card-change">Answer questions to track</div></div>
-        <div class="stat-card"><div class="stat-card-label">Study Streak</div><div class="stat-card-value">1 🔥</div><div class="stat-card-change">Keep it going!</div></div>
+        <div class="stat-card"><div class="stat-card-label">Study Streak</div><div class="stat-card-value" id="stat-streak">1 🔥</div><div class="stat-card-change">Keep it going!</div></div>
         <div class="stat-card"><div class="stat-card-label">Topics Explored</div><div class="stat-card-value" id="stat-topics">0</div><div class="stat-card-change">of 180 A-Level topics</div></div>
       </div>
       <div class="dash-grid">
@@ -1801,8 +1801,8 @@ body.mode-adhd .adhd-break { display: block; }
           <!-- Recent activity -->
           <div class="card">
             <div class="card-header"><span class="card-title">⚡ Recent Activity</span></div>
-            <div class="card-body" style="padding:1rem 1.5rem">
-              <div class="activity-item"><div class="activity-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🎓</div><div><div class="activity-text fw700">Welcome to Synaptiq!</div><div style="font-size:.75rem;color:var(--muted)">Your A-Level Maths journey starts now</div></div><div class="activity-time">now</div></div>
+            <div class="card-body" style="padding:1rem 1.5rem" id="activity-feed">
+              <div class="activity-item"><div class="activity-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🎓</div><div><div class="activity-text fw700">Welcome to Synaptiq!</div><div style="font-size:.75rem;color:var(--muted)">Your A-Level Maths journey starts now</div></div><div class="activity-time">—</div></div>
             </div>
           </div>
           <!-- Quick actions -->
@@ -1825,45 +1825,45 @@ body.mode-adhd .adhd-break { display: block; }
         <!-- Topic sidebar -->
         <div class="tutor-subjects">
           <h4>A-Level Topics</h4>
-          <button class="subj-btn active" onclick="setTopic('A-Level Maths — General')">📐 General</button>
+          <button class="subj-btn active" onclick="setTopic('A-Level Maths — General', this)">📐 General</button>
           <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.75rem .9rem .25rem">Pure 1</div>
-          <button class="subj-btn" onclick="setTopic('Algebraic Expressions')">Algebraic Expressions</button>
-          <button class="subj-btn" onclick="setTopic('Quadratics')">Quadratics</button>
-          <button class="subj-btn" onclick="setTopic('Equations & Inequalities')">Equations & Inequalities</button>
-          <button class="subj-btn" onclick="setTopic('Graphs & Transformations')">Graphs & Transformations</button>
-          <button class="subj-btn" onclick="setTopic('Straight Line Graphs')">Straight Line Graphs</button>
-          <button class="subj-btn" onclick="setTopic('Circles')">Circles</button>
-          <button class="subj-btn" onclick="setTopic('Algebraic Methods')">Algebraic Methods</button>
-          <button class="subj-btn" onclick="setTopic('Binomial Expansion (Y1)')">Binomial Expansion</button>
-          <button class="subj-btn" onclick="setTopic('Trigonometric Ratios')">Trigonometric Ratios</button>
-          <button class="subj-btn" onclick="setTopic('Trigonometric Identities')">Trig Identities</button>
-          <button class="subj-btn" onclick="setTopic('Vectors (Pure 1)')">Vectors</button>
-          <button class="subj-btn" onclick="setTopic('Differentiation (Pure 1)')">Differentiation</button>
-          <button class="subj-btn" onclick="setTopic('Integration (Pure 1)')">Integration</button>
-          <button class="subj-btn" onclick="setTopic('Exponentials & Logarithms')">Exponentials & Logs</button>
+          <button class="subj-btn" onclick="setTopic('Algebraic Expressions', this)">Algebraic Expressions</button>
+          <button class="subj-btn" onclick="setTopic('Quadratics', this)">Quadratics</button>
+          <button class="subj-btn" onclick="setTopic('Equations & Inequalities', this)">Equations & Inequalities</button>
+          <button class="subj-btn" onclick="setTopic('Graphs & Transformations', this)">Graphs & Transformations</button>
+          <button class="subj-btn" onclick="setTopic('Straight Line Graphs', this)">Straight Line Graphs</button>
+          <button class="subj-btn" onclick="setTopic('Circles', this)">Circles</button>
+          <button class="subj-btn" onclick="setTopic('Algebraic Methods', this)">Algebraic Methods</button>
+          <button class="subj-btn" onclick="setTopic('Binomial Expansion (Y1)', this)">Binomial Expansion</button>
+          <button class="subj-btn" onclick="setTopic('Trigonometric Ratios', this)">Trigonometric Ratios</button>
+          <button class="subj-btn" onclick="setTopic('Trigonometric Identities', this)">Trig Identities</button>
+          <button class="subj-btn" onclick="setTopic('Vectors (Pure 1)', this)">Vectors</button>
+          <button class="subj-btn" onclick="setTopic('Differentiation (Pure 1)', this)">Differentiation</button>
+          <button class="subj-btn" onclick="setTopic('Integration (Pure 1)', this)">Integration</button>
+          <button class="subj-btn" onclick="setTopic('Exponentials & Logarithms', this)">Exponentials & Logs</button>
           <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.75rem .9rem .25rem">Pure 2</div>
-          <button class="subj-btn" onclick="setTopic('Algebraic Methods (Pure 2)')">Algebraic Methods</button>
-          <button class="subj-btn" onclick="setTopic('Functions & Graphs')">Functions & Graphs</button>
-          <button class="subj-btn" onclick="setTopic('Sequences & Series')">Sequences & Series</button>
-          <button class="subj-btn" onclick="setTopic('Radians')">Radians</button>
-          <button class="subj-btn" onclick="setTopic('Trigonometric Functions')">Trig Functions</button>
-          <button class="subj-btn" onclick="setTopic('Parametric Equations')">Parametric Equations</button>
-          <button class="subj-btn" onclick="setTopic('Differentiation (Pure 2)')">Differentiation</button>
-          <button class="subj-btn" onclick="setTopic('Numerical Methods')">Numerical Methods</button>
-          <button class="subj-btn" onclick="setTopic('Integration (Pure 2)')">Integration</button>
+          <button class="subj-btn" onclick="setTopic('Algebraic Methods (Pure 2)', this)">Algebraic Methods</button>
+          <button class="subj-btn" onclick="setTopic('Functions & Graphs', this)">Functions & Graphs</button>
+          <button class="subj-btn" onclick="setTopic('Sequences & Series', this)">Sequences & Series</button>
+          <button class="subj-btn" onclick="setTopic('Radians', this)">Radians</button>
+          <button class="subj-btn" onclick="setTopic('Trigonometric Functions', this)">Trig Functions</button>
+          <button class="subj-btn" onclick="setTopic('Parametric Equations', this)">Parametric Equations</button>
+          <button class="subj-btn" onclick="setTopic('Differentiation (Pure 2)', this)">Differentiation</button>
+          <button class="subj-btn" onclick="setTopic('Numerical Methods', this)">Numerical Methods</button>
+          <button class="subj-btn" onclick="setTopic('Integration (Pure 2)', this)">Integration</button>
           <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.75rem .9rem .25rem">Statistics</div>
-          <button class="subj-btn" onclick="setTopic('Statistical Sampling')">Statistical Sampling</button>
-          <button class="subj-btn" onclick="setTopic('Data Presentation')">Data Presentation</button>
-          <button class="subj-btn" onclick="setTopic('Probability')">Probability</button>
-          <button class="subj-btn" onclick="setTopic('Statistical Distributions')">Distributions</button>
-          <button class="subj-btn" onclick="setTopic('Hypothesis Testing')">Hypothesis Testing</button>
-          <button class="subj-btn" onclick="setTopic('Normal Distribution')">Normal Distribution</button>
+          <button class="subj-btn" onclick="setTopic('Statistical Sampling', this)">Statistical Sampling</button>
+          <button class="subj-btn" onclick="setTopic('Data Presentation', this)">Data Presentation</button>
+          <button class="subj-btn" onclick="setTopic('Probability', this)">Probability</button>
+          <button class="subj-btn" onclick="setTopic('Statistical Distributions', this)">Distributions</button>
+          <button class="subj-btn" onclick="setTopic('Hypothesis Testing', this)">Hypothesis Testing</button>
+          <button class="subj-btn" onclick="setTopic('Normal Distribution', this)">Normal Distribution</button>
           <div style="font-size:.65rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.75rem .9rem .25rem">Mechanics</div>
-          <button class="subj-btn" onclick="setTopic('Kinematics')">Kinematics</button>
-          <button class="subj-btn" onclick="setTopic('Forces & Newton\'s Laws')">Forces & Newton's Laws</button>
-          <button class="subj-btn" onclick="setTopic('Moments')">Moments</button>
-          <button class="subj-btn" onclick="setTopic('Projectiles')">Projectiles</button>
-          <button class="subj-btn" onclick="setTopic('Friction')">Friction</button>
+          <button class="subj-btn" onclick="setTopic('Kinematics', this)">Kinematics</button>
+          <button class="subj-btn" onclick="setTopic('Forces &amp; Newton\'s Laws', this)">Forces & Newton's Laws</button>
+          <button class="subj-btn" onclick="setTopic('Moments', this)">Moments</button>
+          <button class="subj-btn" onclick="setTopic('Projectiles', this)">Projectiles</button>
+          <button class="subj-btn" onclick="setTopic('Friction', this)">Friction</button>
         </div>
         <div class="tutor-chat">
           <div class="tutor-header">
@@ -2238,8 +2238,8 @@ body.mode-adhd .adhd-break { display: block; }
       </div>
       <div class="settings-section">
         <h3>🔐 Privacy & Data</h3>
-        <div class="setting-row"><div class="setting-info"><h4>Download My Data</h4><p>Export all your learning data (GDPR)</p></div><button class="btn btn-outline" style="font-size:.8rem;padding:.5rem 1rem">Download</button></div>
-        <div class="setting-row"><div class="setting-info"><h4>Delete Account</h4><p>Permanently delete your account and all data</p></div><button class="btn" style="background:rgba(251,113,133,0.1);color:var(--red);border:1px solid rgba(251,113,133,0.3);font-size:.8rem;padding:.5rem 1rem;border-radius:8px;cursor:pointer">Delete</button></div>
+        <div class="setting-row"><div class="setting-info"><h4>Download My Data</h4><p>Export all your learning data (GDPR)</p></div><button class="btn btn-outline" style="font-size:.8rem;padding:.5rem 1rem" onclick="downloadData()">Download</button></div>
+        <div class="setting-row"><div class="setting-info"><h4>Delete Account</h4><p>Permanently delete your account and all data</p></div><button class="btn" style="background:rgba(251,113,133,0.1);color:var(--red);border:1px solid rgba(251,113,133,0.3);font-size:.8rem;padding:.5rem 1rem;border-radius:8px;cursor:pointer" onclick="deleteAccount()">Delete</button></div>
       </div>
     </div>
 
@@ -2381,7 +2381,19 @@ const state = {
   calcPrev: '',
   calcOp: '',
   uploads: [],
-  pendingFile: null
+  pendingFile: null,
+  // Persistent stats & tracking
+  stats: {
+    questionsAnswered: 0,
+    topicsExplored: [],
+    studyDays: {},       // { 'YYYY-MM-DD': sessionCount }
+    streak: 1,
+    lastStudyDate: null
+  },
+  progress: { pure1: 0, pure2: 0, stats: 0, mechanics: 0 },
+  studiedChapters: [],   // chapter names studied this account lifetime
+  badges: [],            // earned badge ids
+  assignments: []        // saved teacher assignments
 };
 
 // ═══════════════════════════════════════
@@ -2472,6 +2484,7 @@ function nextStep(from) {
     const email = document.getElementById('reg-email').value.trim();
     const pass = document.getElementById('reg-pass').value;
     if (!name || !email || !pass) { showToast('Please fill in all fields'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address'); return; }
     if (pass.length < 8) { showToast('Password must be at least 8 characters'); return; }
   }
   document.getElementById('step' + from).classList.remove('active');
@@ -2532,6 +2545,8 @@ function createAccount() {
   applyLearningProfile();
   enterDashboard();
   addXP(100, '🎉 Welcome bonus!');
+  logActivity('🎓', 'Joined Synaptiq — welcome!');
+  saveStats();
   setTimeout(() => showOnboarding(), 800);
 }
 
@@ -2586,6 +2601,13 @@ function enterDashboard() {
 
   nav('dashboard');
   showDash('home');
+  // Refresh live data displays
+  loadStats();
+  updateXPDisplay();
+  updateStatCards();
+  updateProgressBars();
+  loadAssignments();
+  recordStudyDay();
 }
 
 function showSignup() {
@@ -2613,6 +2635,14 @@ document.addEventListener('DOMContentLoaded', () => {
       state.user = JSON.parse(saved);
       applyLearningProfile();
       loadUploadsFromStorage();
+      loadStats();
+      // Restore accessibility modes
+      try {
+        const savedModes = JSON.parse(localStorage.getItem('synaptiq_modes') || '{}');
+        if (savedModes.adhd) setMode('adhd', true);
+        if (savedModes.dyslexia) setMode('dyslexia', true);
+        if (savedModes.dyscalculia) setMode('dyscalculia', true);
+      } catch(e) {}
     }
   } catch(e) {}
   buildNumberLine(0);
@@ -2647,6 +2677,8 @@ function toggleMode(mode) {
   if (mode === 'adhd' && state.modes[mode]) showToast('⚡ ADHD Mode ON — content will be broken into steps');
   if (mode === 'dyslexia' && state.modes[mode]) showToast('📖 Dyslexia Mode ON — Lexend font enabled');
   if (mode === 'dyscalculia' && state.modes[mode]) showToast('🧮 Dyscalculia Mode ON — visual calculator opened');
+  // Persist mode preferences
+  try { localStorage.setItem('synaptiq_modes', JSON.stringify(state.modes)); } catch(e) {}
 }
 
 // ═══════════════════════════════════════
@@ -2807,18 +2839,24 @@ When explaining concepts: Start with the core idea, then show a worked example, 
 // ═══════════════════════════════════════
 // TUTOR CHAT
 // ═══════════════════════════════════════
-function setTopic(name) {
+function setTopic(name, btnEl) {
   state.topic = name;
   state.tutorHistory = [];
   document.querySelectorAll('.subj-btn').forEach(b => b.classList.remove('active'));
-  // Highlight the clicked button
-  event && event.target && event.target.classList.add('active');
+  if (btnEl) btnEl.classList.add('active');
   document.getElementById('tutor-subject-title').textContent = 'A-Level Maths Tutor';
   const subEl = document.getElementById('tutor-topic-sub');
   if (subEl) subEl.textContent = 'Topic: ' + name;
   document.getElementById('tutor-messages').innerHTML = '';
   addTutorMsg('bot', `Topic set to: **${name}** ✦\n\nI'm ready to explain, give worked examples, or generate exam-style questions on this topic. What would you like to do?`);
+  // Track unique topics explored
+  if (!state.stats.topicsExplored.includes(name)) {
+    state.stats.topicsExplored.push(name);
+    updateStatCards();
+    saveStats();
+  }
   trackEvent('chapter_opened', { topic: name });
+  checkBadges();
 }
 
 function addTutorMsg(role, text) {
@@ -2860,10 +2898,16 @@ async function tutorSend() {
     state.tutorHistory.push({ role: 'assistant', content: reply });
     addTutorMsg('bot', reply);
     addXP(10);
+    state.stats.questionsAnswered++;
+    recordStudyDay();
+    updateStatCards();
+    saveStats();
+    logActivity('🤖', `Asked about ${state.topic}`);
+    checkBadges();
     trackEvent('tutor_message_sent', { topic: state.topic });
   } catch (e) {
     typing.remove();
-    addTutorMsg('bot', '⚠️ ' + e.message);
+    addTutorMsg('bot', '⚠️ ' + friendlyError(e));
   }
 }
 
@@ -2913,9 +2957,14 @@ async function dashSend() {
     state.dashHistory.push({ role: 'assistant', content: reply });
     addDashMsg('bot', reply);
     addXP(5);
+    state.stats.questionsAnswered++;
+    recordStudyDay();
+    updateStatCards();
+    saveStats();
+    checkBadges();
   } catch (e) {
     typing.remove();
-    addDashMsg('bot', '⚠️ ' + e.message);
+    addDashMsg('bot', '⚠️ ' + friendlyError(e));
   }
 }
 
@@ -2958,7 +3007,7 @@ ONLY return the JSON array, nothing else.${a11y ? '\n\nIMPORTANT accessibility n
       const clean = reply.replace(/```json|```/g, '').trim();
       questions = JSON.parse(clean);
     } catch (e) {
-      qContainer.innerHTML = '<div class="msg bot" style="max-width:100%">⚠️ Could not parse questions. Raw response:<br>' + reply + '</div>';
+      qContainer.innerHTML = '<div class="msg bot" style="max-width:100%">⚠️ Could not parse questions. Please try again.</div>';
       return;
     }
     qContainer.innerHTML = '';
@@ -2974,9 +3023,15 @@ ONLY return the JSON array, nothing else.${a11y ? '\n\nIMPORTANT accessibility n
         </div>`;
     });
     addXP(20);
+    state.stats.questionsAnswered += parseInt(num) || 1;
+    recordStudyDay();
+    updateStatCards();
+    saveStats();
+    logActivity('📝', `Generated ${num} ${module} questions`);
+    checkBadges();
     showToast('✦ Questions generated!');
   } catch (e) {
-    qContainer.innerHTML = `<div class="msg bot" style="max-width:100%">⚠️ Error: ${e.message}</div>`;
+    qContainer.innerHTML = `<div class="msg bot" style="max-width:100%">⚠️ ${friendlyError(e)}</div>`;
   }
 }
 
@@ -2999,8 +3054,9 @@ ${getA11yInstructions()}`;
     const data = await callClaude([{ role: 'user', content: `I'm studying ${board} A-Level Maths. Based on common difficulty areas — integration, trigonometric identities, hypothesis testing, projectile motion, and binomial expansion — give me a personalised study plan with specific action items.` }], sys);
     body.innerHTML = getReply(data);
     addXP(15);
+    logActivity('🎯', 'Ran strengths analysis');
   } catch (e) {
-    body.innerHTML = `<p style="color:var(--red)">⚠️ ${e.message}</p>`;
+    body.innerHTML = `<p style="color:var(--red)">⚠️ ${friendlyError(e)}</p>`;
   }
 }
 
@@ -3023,9 +3079,9 @@ async function getHint(id) {
   const sys = `You are a supportive A-Level Maths tutor helping a student with their homework. Give a helpful HINT that guides them WITHOUT giving the answer away. Reference the mark scheme approach where relevant. Keep it to 2-3 sentences. ${getA11yInstructions()}`;
   try {
     const data = await callClaude([{ role: 'user', content: `Give me a hint for: ${hints[id]}. Don't give me the answer, just guide me.` }], sys);
-    showToast('💡 ' + getReply(data).slice(0, 100) + '...');
+    showToast('💡 ' + getReply(data).slice(0, 120) + '...');
   } catch (e) {
-    showToast('⚠️ ' + e.message.slice(0, 80));
+    showToast('⚠️ ' + friendlyError(e));
   }
 }
 
@@ -3040,14 +3096,50 @@ async function createAssignment() {
   try {
     const data = await callClaude([{ role: 'user', content: `Create a detailed A-Level Maths homework assignment for ${year} titled "${title}" (module: ${subject}). Include: learning objectives, exam-style questions (3-5), mark allocations, and mark scheme hints. Follow ${board} style.` }], sys);
     document.getElementById('asgn-instructions').value = getReply(data).slice(0, 500);
-    showToast('✦ Assignment generated!');
+    showToast('✦ Assignment generated! Review and click Save.');
   } catch (e) {
-    showToast('⚠️ ' + e.message.slice(0, 80));
+    showToast('⚠️ ' + friendlyError(e));
   }
 }
 
-function saveAssignment() { showToast('✅ Assignment saved and sent to students!'); }
-function openAssignment(id) { showToast('Opening assignment...'); showDash('tutor'); }
+function saveAssignment() {
+  const title = document.getElementById('asgn-title').value.trim();
+  const subject = document.getElementById('asgn-subject').value;
+  const year = document.getElementById('asgn-year').value;
+  const instructions = document.getElementById('asgn-instructions').value.trim();
+  if (!title) { showToast('Please enter a title'); return; }
+  const asgn = {
+    id: Date.now(),
+    title, subject, year, instructions,
+    createdAt: new Date().toISOString(),
+    status: 'active'
+  };
+  state.assignments.push(asgn);
+  saveStats();
+  updateAssignmentBadge();
+  showToast('✅ Assignment saved and sent to students!');
+  logActivity('📋', `Created assignment: ${title}`);
+}
+
+function loadAssignments() {
+  // assignments already loaded via loadStats()
+  updateAssignmentBadge();
+}
+
+function updateAssignmentBadge() {
+  const badge = document.querySelector('#si-assignments .sidebar-badge');
+  if (badge) badge.textContent = state.assignments.length;
+}
+
+function openAssignment(id) {
+  const asgn = state.assignments.find(a => a.id === id);
+  if (asgn) {
+    setTopic('Assignment: ' + asgn.title);
+    showDash('tutor');
+  } else {
+    showDash('tutor');
+  }
+}
 
 // ═══════════════════════════════════════
 // VIDEO PLAYER (Interactive)
@@ -3124,11 +3216,21 @@ function speakInput() {
   }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recog = new SR();
+  const btn = document.getElementById('speak-btn');
+  if (btn) { btn.textContent = '🔴'; btn.style.animation = 'pulse 1s infinite'; }
   recog.onresult = (e) => {
     document.getElementById('tutor-input').value = e.results[0][0].transcript;
+    if (btn) { btn.textContent = '🎤'; btn.style.animation = ''; }
+  };
+  recog.onerror = () => {
+    if (btn) { btn.textContent = '🎤'; btn.style.animation = ''; }
+    showToast('Could not hear you — please try again');
+  };
+  recog.onend = () => {
+    if (btn) { btn.textContent = '🎤'; btn.style.animation = ''; }
   };
   recog.start();
-  showToast('🎤 Listening...');
+  showToast('🎤 Listening — speak now...');
 }
 
 // ═══════════════════════════════════════
@@ -3142,6 +3244,7 @@ function addXP(amount, msg) {
     showToast(`🎉 Level Up! You're now Level ${newLevel}!`);
   }
   updateXPDisplay();
+  saveStats();
   const popup = document.getElementById('xp-popup');
   popup.textContent = (msg || `+${amount} XP ⭐`);
   popup.classList.add('show');
@@ -3161,14 +3264,16 @@ function updateXPDisplay() {
 // ═══════════════════════════════════════
 function buildHeatmap() {
   const el = document.getElementById('heatmap');
+  if (!el) return;
   const levels = ['', 'l1', 'l2', 'l3', 'l4'];
   let html = '';
   for (let i = 0; i < 84; i++) {
-    const rand = Math.random();
-    const lvl = rand < 0.3 ? 0 : rand < 0.5 ? 1 : rand < 0.7 ? 2 : rand < 0.9 ? 3 : 4;
     const date = new Date(); date.setDate(date.getDate() - (83 - i));
+    const key = date.toISOString().slice(0, 10);
+    const sessions = state.stats.studyDays[key] || 0;
+    const lvl = sessions === 0 ? 0 : sessions <= 2 ? 1 : sessions <= 5 ? 2 : sessions <= 10 ? 3 : 4;
     const label = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-    html += `<div class="heat-cell ${levels[lvl]}" data-tip="${label}: ${lvl * 3} sessions"></div>`;
+    html += `<div class="heat-cell ${levels[lvl]}" title="${label}: ${sessions} session${sessions !== 1 ? 's' : ''}"></div>`;
   }
   el.innerHTML = html;
 }
@@ -3203,6 +3308,23 @@ const ALEVEL_CONTENT = {
   }
 };
 
+// Chapter → module mapping for progress tracking
+const CHAPTER_MODULE = {};
+(function() {
+  const map = {
+    pure1: ['Algebraic Expressions','Quadratics','Equations & Inequalities','Graphs & Transformations','Straight Line Graphs','Circles','Algebraic Methods','The Binomial Expansion','Trigonometric Ratios','Trigonometric Identities & Equations','Vectors','Differentiation','Integration','Exponentials & Logarithms'],
+    pure2: ['Algebraic Methods (Pure 2)','Functions & Graphs','Sequences & Series','Binomial Expansion','Radians','Trigonometric Functions','Trigonometry & Modelling','Parametric Equations','Differentiation (Pure 2)','Numerical Methods','Integration (Pure 2)','Vectors (Pure 2)'],
+    stats: ['Statistical Sampling','Data Presentation','Probability','Statistical Distributions','Hypothesis Testing','Normal Distribution','Statistical Sampling','Data Presentation & Interpretation','Statistical Distributions','Statistical Hypothesis Testing','Regression, Correlation & Hypothesis Testing','Conditional Probability','The Normal Distribution'],
+    mechanics: ['Kinematics','Forces & Newton\'s Laws','Moments','Projectiles','Friction','Quantities & Units in Mechanics','Kinematics 1 — Constant Acceleration','Variable Acceleration','Forces & Friction','Applications of Forces','Further Kinematics']
+  };
+  for (const [mod, chapters] of Object.entries(map)) {
+    chapters.forEach(ch => { CHAPTER_MODULE[ch] = mod; });
+  }
+})();
+
+// Module chapter totals for % calculation
+const MODULE_TOTALS = { pure1: 14, pure2: 12, stats: 8, mechanics: 9 };
+
 function buildSection(key) {
   const s = ALEVEL_CONTENT[key];
   const sectionId = `sec-${key.replace(/[A-Z]/g, c => '-' + c.toLowerCase())}`;
@@ -3212,14 +3334,17 @@ function buildSection(key) {
         <span class="stats-sub-label">${s.label} — ${s.year}</span>
       </div>
       <div class="chapter-list">
-        ${s.chapters.map((ch, i) => `
-          <div class="chapter-item">
+        ${s.chapters.map((ch, i) => {
+          const done = state.studiedChapters.includes(ch);
+          return `
+          <div class="chapter-item" style="${done ? 'opacity:.85' : ''}">
             <div class="chapter-item-left">
-              <div class="chapter-num-badge">${i + 1}</div>
-              <span class="chapter-name">${ch}</span>
+              <div class="chapter-num-badge" style="${done ? 'background:var(--green);color:#000' : ''}">${done ? '✓' : i + 1}</div>
+              <span class="chapter-name" style="${done ? 'color:var(--muted)' : ''}">${ch}</span>
             </div>
             <button class="chapter-study-btn" onclick="studyChapter('${ch.replace(/'/g,"\\'")}')">Study →</button>
-          </div>`).join('')}
+          </div>`;
+        }).join('')}
       </div>
     </div>`;
   return html;
@@ -3236,7 +3361,7 @@ function buildContentPage() {
   };
   for (const [id, key] of Object.entries(sections)) {
     const el = document.getElementById(id);
-    if (el && !el.hasChildNodes()) el.innerHTML = buildSection(key);
+    if (el) el.innerHTML = buildSection(key);
   }
 }
 
@@ -3249,6 +3374,12 @@ function switchContent(panel, btn) {
 }
 
 function studyChapter(chapter) {
+  // Track chapter as studied
+  if (!state.studiedChapters.includes(chapter)) {
+    state.studiedChapters.push(chapter);
+    updateProgressBars();
+    logActivity('📖', `Started studying ${chapter}`);
+  }
   setTopic(chapter);
   showDash('tutor');
   trackEvent('chapter_opened', { chapter });
@@ -3323,6 +3454,8 @@ async function confirmUpload() {
   renderResourcesList();
   cancelUpload();
   trackEvent('resource_uploaded', { category, board, module });
+  logActivity('📄', `Uploaded ${file.name}`);
+  checkBadges();
   showToast('✅ Resource uploaded! AI tutor will now use it.');
 }
 
@@ -3428,6 +3561,159 @@ async function startCheckout(plan) {
   } catch (e) {
     showToast('⚠️ Could not open checkout. Try again.');
   }
+}
+
+// ═══════════════════════════════════════
+// STATS PERSISTENCE
+// ═══════════════════════════════════════
+function saveStats() {
+  try {
+    localStorage.setItem('synaptiq_stats', JSON.stringify({
+      xp: state.xp, level: state.level,
+      stats: state.stats, progress: state.progress,
+      studiedChapters: state.studiedChapters, badges: state.badges,
+      assignments: state.assignments
+    }));
+  } catch(e) {}
+}
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem('synaptiq_stats');
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (saved.xp != null) state.xp = saved.xp;
+    if (saved.level != null) state.level = saved.level;
+    if (saved.stats) state.stats = { ...state.stats, ...saved.stats };
+    if (saved.progress) state.progress = { ...state.progress, ...saved.progress };
+    if (Array.isArray(saved.studiedChapters)) state.studiedChapters = saved.studiedChapters;
+    if (Array.isArray(saved.badges)) state.badges = saved.badges;
+    if (Array.isArray(saved.assignments)) state.assignments = saved.assignments;
+  } catch(e) {}
+}
+
+function updateStatCards() {
+  const qEl = document.getElementById('stat-q');
+  const topEl = document.getElementById('stat-topics');
+  const streakEl = document.getElementById('stat-streak');
+  if (qEl) qEl.textContent = state.stats.questionsAnswered;
+  if (topEl) topEl.textContent = state.stats.topicsExplored.length;
+  if (streakEl) streakEl.textContent = (state.stats.streak || 1) + ' 🔥';
+}
+
+function updateProgressBars() {
+  const modules = { pure1: ['--blue', '#stat-pure1'], pure2: ['--gold', '#stat-pure2'], stats: ['--green', '#stat-stats'], mechanics: ['--purple', '#stat-mech'] };
+  for (const [mod, [color, statId]] of Object.entries(modules)) {
+    const total = MODULE_TOTALS[mod] || 10;
+    const studied = state.studiedChapters.filter(ch => CHAPTER_MODULE[ch] === mod).length;
+    const pct = Math.round(studied / total * 100);
+    state.progress[mod] = pct;
+
+    // Dashboard home progress bars (by index matching order)
+    const bars = document.querySelectorAll('#sp-home .progress-fill');
+    const labels = document.querySelectorAll('#sp-home .progress-header span:last-child');
+    const modOrder = ['pure1', 'pure2', 'stats', 'mechanics'];
+    const idx = modOrder.indexOf(mod);
+    if (bars[idx]) bars[idx].style.width = pct + '%';
+    if (labels[idx]) labels[idx].textContent = pct + '%';
+
+    // Progress subpage bars
+    const progBars = document.querySelectorAll('#sp-progress .progress-fill');
+    const progLabels = document.querySelectorAll('#sp-progress .progress-header span:last-child');
+    if (progBars[idx]) progBars[idx].style.width = pct + '%';
+    if (progLabels[idx]) progLabels[idx].textContent = pct + '%';
+  }
+  saveStats();
+}
+
+function recordStudyDay() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (!state.stats.studyDays[today]) state.stats.studyDays[today] = 0;
+  state.stats.studyDays[today]++;
+  // Streak calculation
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (state.stats.lastStudyDate === yesterday) {
+    state.stats.streak = (state.stats.streak || 1) + 1;
+  } else if (state.stats.lastStudyDate !== today) {
+    state.stats.streak = 1;
+  }
+  state.stats.lastStudyDate = today;
+  updateStatCards();
+}
+
+// ═══════════════════════════════════════
+// ACTIVITY LOG
+// ═══════════════════════════════════════
+function logActivity(icon, text) {
+  const feed = document.getElementById('activity-feed');
+  if (!feed) return;
+  const timeStr = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const item = document.createElement('div');
+  item.className = 'activity-item';
+  item.innerHTML = `<div class="activity-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">${icon}</div><div><div class="activity-text fw700">${text}</div><div style="font-size:.75rem;color:var(--muted)">${timeStr}</div></div><div class="activity-time">now</div>`;
+  feed.insertBefore(item, feed.firstChild);
+  // Keep max 8 items
+  while (feed.children.length > 8) feed.removeChild(feed.lastChild);
+}
+
+// ═══════════════════════════════════════
+// ACHIEVEMENTS / BADGES
+// ═══════════════════════════════════════
+const BADGE_DEFS = [
+  { id: 'first_steps',    icon: '🎯', name: 'First Steps',      desc: 'Sent your first tutor message',   check: () => state.stats.questionsAnswered >= 1 },
+  { id: 'topic_explorer', icon: '🗺️', name: 'Topic Explorer',   desc: 'Explored 5 different topics',     check: () => state.stats.topicsExplored.length >= 5 },
+  { id: 'question_master',icon: '📝', name: 'Question Master',  desc: 'Answered 20 questions',           check: () => state.stats.questionsAnswered >= 20 },
+  { id: 'week_warrior',   icon: '🔥', name: 'Week Warrior',     desc: '7-day study streak',              check: () => (state.stats.streak || 0) >= 7 },
+  { id: 'resource_pro',   icon: '📚', name: 'Resource Pro',     desc: 'Uploaded your first resource',   check: () => state.uploads.length >= 1 }
+];
+
+function checkBadges() {
+  BADGE_DEFS.forEach(badge => {
+    if (!state.badges.includes(badge.id) && badge.check()) {
+      state.badges.push(badge.id);
+      showToast(`${badge.icon} Achievement unlocked: ${badge.name}!`);
+      addXP(25, `${badge.icon} ${badge.name} +25 XP`);
+      saveStats();
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// DOWNLOAD DATA & DELETE ACCOUNT
+// ═══════════════════════════════════════
+function downloadData() {
+  const data = {};
+  ['synaptiq_user','synaptiq_uploads','synaptiq_stats','synaptiq_modes','synaptiq_assignments','synaptiq_onboarded'].forEach(k => {
+    try { data[k] = JSON.parse(localStorage.getItem(k) || 'null'); } catch(e) {}
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'synaptiq-data.json'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Data downloaded!');
+}
+
+function deleteAccount() {
+  if (!confirm('Are you sure you want to permanently delete your account and all data? This cannot be undone.')) return;
+  ['synaptiq_user','synaptiq_uploads','synaptiq_stats','synaptiq_modes','synaptiq_assignments','synaptiq_onboarded','synaptiq_exit_shown'].forEach(k => {
+    try { localStorage.removeItem(k); } catch(e) {}
+  });
+  logout();
+  showToast('Account deleted. Sorry to see you go!');
+}
+
+// ═══════════════════════════════════════
+// FRIENDLY ERROR MESSAGES
+// ═══════════════════════════════════════
+function friendlyError(e) {
+  const msg = e.message || '';
+  if (msg.includes('Network error') || msg.includes('fetch')) return 'Connection issue — check your internet and try again.';
+  if (msg.includes('401') || msg.includes('403')) return 'Access denied — API key may need updating.';
+  if (msg.includes('429')) return 'Too many requests — please wait a moment and try again.';
+  if (msg.includes('500') || msg.includes('502') || msg.includes('503')) return 'Server error — please try again in a moment.';
+  if (msg.includes('parse') || msg.includes('JSON')) return 'Unexpected response from AI — please try again.';
+  return 'Something went wrong — please try again.';
 }
 
 // ═══════════════════════════════════════
